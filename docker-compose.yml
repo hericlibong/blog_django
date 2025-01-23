@@ -6,4 +6,23 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
-    command: python django_blog/manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - db
+    environment:
+      POSTGRES_PASSWORD: postgres
+    command: >
+      sh -c "./wait-for-postgres.sh db python /app/django_blog/manage.py migrate &&
+             python /app/django_blog/manage.py runserver 0.0.0.0:8000"
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:
+
