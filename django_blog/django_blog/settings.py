@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts',
+    #'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -50,10 +52,15 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# INTERNAL_IPS = [
+#     '127.0.0.1',
+# ]
 
 ROOT_URLCONF = 'django_blog.urls'
 
@@ -85,18 +92,6 @@ WSGI_APPLICATION = 'django_blog.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'postgres',
-#         'USER': 'postgres',
-#         'PASSWORD': 'postgres',
-#         'HOST': 'db',  # Utilise 'db' pour correspondre au nom du service dans docker-compose.yml
-#         'PORT': 5432,
-#     }
-# }
-# Database
 
 DATABASES = {
     'default': {
@@ -146,6 +141,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+AUTH_USER_MODEL = 'accounts.UserAccount'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
