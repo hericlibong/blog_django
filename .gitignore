@@ -1,3 +1,4 @@
 # Docker volumes
 **/volumes/
 django_blog/db.sqlite3
+.env
