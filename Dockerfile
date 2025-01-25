@@ -1,26 +1,28 @@
 # Utiliser une image officielle de Python comme base
 FROM python:3.12-slim
 
-# Mettre à jour les paquets et installer psql (client PostgreSQL)
+# Installer le client PostgreSQL
 RUN apt-get update && apt-get install -y postgresql-client && rm -rf /var/lib/apt/lists/*
 
-# Définir le répertoire de travail dans le conteneur
+# 1) On place notre répertoire de travail “temporaire” à /app
 WORKDIR /app
 
-# Copier le fichier requirements.txt dans le conteneur
+# 2) On copie le requirements.txt et on installe les dépendances
 COPY requirements.txt .
-
-# Installer les dépendances Python listées dans requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copier tout le contenu du projet dans le conteneur
+# 3) On copie tout le projet (blog_django/*) dans /app
 COPY . .
 
-# Rendre le script wait-for-postgres.sh exécutable
+# 4) Rendre le script d’attente exécutable
 RUN chmod +x wait-for-postgres.sh
 
-# Exposer le port 8000 pour le serveur Django
+# 5) IMPORTANT : on redéfinit le WORKDIR pour pointer vers le répertoire 
+#    qui contient manage.py, c’est-à-dire /app/django_blog
+WORKDIR /app/django_blog
+
+# 6) On expose le port
 EXPOSE 8000
 
-# Commande de démarrage par défaut
-CMD ["sh", "-c", "./wait-for-postgres.sh db python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+# 7) Commande de démarrage par défaut
+CMD ["sh", "-c", "../wait-for-postgres.sh db python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
