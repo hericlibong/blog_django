@@ -17,6 +17,10 @@
         {% empty %}
             <li>Pas d'images disponibles pour ce projet.</li>
         {% endfor %}
+            {% if user.is_authenticated and user.is_superuser %}
+            <a href="{% url 'portfolio:project_update' project.id %}">Modifier</a> |
+            <a href="{% url 'portfolio:project_delete' project.id %}">Supprimer</a>
+            {% endif %}
     </ul>
 
     <a href="{% url 'portfolio:project_list' %}">Retour à la liste des projets</a>

@@ -10,8 +10,11 @@
     <header>
         <nav>
             <ul>
-                <li><a href="{% url 'portfolio:project_list' %}">Projets</a></li>
                 <li><a href="{% url 'portfolio:about' %}">À propos</a></li>
+                <li><a href="{% url 'portfolio:project_list' %}">Tous les projets</a></li>
+                {% if user.is_authenticated and user.is_superuser %}
+                <li><a href="{% url 'portfolio:project_create' %}">Créer un projet</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>

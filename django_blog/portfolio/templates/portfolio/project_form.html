@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ view.object.pk|default:"Créer un nouveau projet" }}</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+</form>
+<a href="{% url 'portfolio:project_list' %}" class="btn btn-secondary">Retour à la liste</a>
+{% endblock %}
