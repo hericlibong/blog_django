@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project.title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ project.title }}</h1>
+    <img src="{{ project.image.url }}" alt="{{ project.title }}" style="max-width: 500px;">
+    <p>{{ project.description }}</p>
+
+    <h2>Galerie d'images</h2>
+    <ul>
+        {% for image in project.images.all %}
+            <li>
+                <img src="{{ image.file.url }}" alt="{{ image.caption }}" style="max-width: 300px;">
+                <p>{{ image.caption }}</p>
+            </li>
+        {% empty %}
+            <li>Pas d'images disponibles pour ce projet.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'portfolio:project_list' %}">Retour à la liste des projets</a>
+{% endblock %}
+
