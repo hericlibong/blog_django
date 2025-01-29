@@ -7,7 +7,6 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-
 class ProjectCreateView(CreateView):
     model = Project
     form_class = ProjectForm
@@ -28,7 +27,6 @@ class ProjectCreateView(CreateView):
         return super().form_valid(form)
     
 
-
 class ProjectUpdateView(UpdateView):
     model = Project
     form_class = ProjectForm
@@ -42,6 +40,7 @@ class ProjectUpdateView(UpdateView):
         """
         return super().form_valid(form)
 
+
 class ProjectDeleteView(DeleteView):
     model = Project
     template_name = 'portfolio/project_confirm_delete.html'
@@ -53,7 +52,6 @@ class ProjectDeleteView(DeleteView):
         des actions supplémentaires.
         """
         return super().delete(request, *args, **kwargs)
-
 
 
 class ProjectListView(ListView):

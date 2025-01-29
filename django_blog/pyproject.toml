@@ -22,7 +22,7 @@ omit = ["*/migrations/*", "*/__init__.py", "*/tests/*"]
 
 [tool.coverage.report]
 show_missing = true
-fail_under = 80
+fail_under = 95
 omit = [
     "*/migrations/*",
     "*/__init__.py",
