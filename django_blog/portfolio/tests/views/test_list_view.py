@@ -2,8 +2,8 @@ import pytest
 from portfolio.models import Project
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User
-from django.core.files.uploadedfile import SimpleUploadedFile
+
+
 
 User = get_user_model()
 
@@ -17,21 +17,21 @@ class TestProjectListView:
         return User.objects.create_superuser(username='admin', password='admin')
 
     @pytest.fixture
-    def projects(db, superuser):
+    def projects(db, superuser, sample_image):
         """Fixture to create sample projects assigned to a superuser."""
-        test_image = SimpleUploadedFile("test_image.jpg", b"file_content", content_type="image/jpeg")  
+        # test_image = SimpleUploadedFile("test_image.jpg", b"file_content", content_type="image/jpeg")  
         return [
             Project.objects.create(
                 title='Project 1',
                 description='Description for project 1',
                 created_by=superuser,  # Correction : Associer un utilisateur
-                image = test_image
+                image = sample_image
             ),
             Project.objects.create(
                 title='Project 2',
                 description='Description for project 2',
                 created_by=superuser,  # Correction : Associer un utilisateur
-                image = test_image
+                image = sample_image
             ),
         ]
 

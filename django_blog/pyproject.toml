@@ -33,3 +33,5 @@ omit = [
 python_files = ["test_*.py", "*_test.py", "*_tests.py"]
 testpaths = ["accounts/tests", "portfolio/tests/*"]
 addopts = ["--cov", "--cov-report=term-missing"]
+
+
