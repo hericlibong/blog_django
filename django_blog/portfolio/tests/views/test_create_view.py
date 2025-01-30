@@ -2,6 +2,7 @@ import pytest
 from portfolio.models import Project
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from portfolio.forms import ProjectForm
 
 User = get_user_model()
 
@@ -20,6 +21,7 @@ class TestProjectCreateView:
         url = reverse('portfolio:project_create')
         response = client.get(url)
         assert response.status_code == 200
+        assert 'portfolio/project_form.html' in [t.name for t in response.templates]
 
     def test_create_project_valid_data(self, client, superuser):
         """Test that a project is created with valid data."""
@@ -33,6 +35,8 @@ class TestProjectCreateView:
         response = client.post(url, data)
         assert response.status_code == 302  # Redirection après succès
         assert Project.objects.filter(title='New Project').exists()
+        project = Project.objects.get(title='New Project')
+        assert project.created_by == superuser
 
     def test_create_project_invalid_data(self, client, superuser):
         """Test that invalid data does not create a project."""
@@ -45,9 +49,14 @@ class TestProjectCreateView:
         response = client.post(url, data)
         assert response.status_code == 200  # Reste sur la page avec des erreurs
         assert not Project.objects.filter(title='').exists()
+        assert 'form' in response.context
+        assert response.context['form'].errors # Vérifie qu'il y a des erreurs
 
     def test_create_project_no_superuser(self, client):
         """Test that trying to create a project without a superuser raises ValueError."""
+        # S'assurer qu'aucun superutilisateur n'est défini
+        User.objects.filter(is_superuser=True).delete()
+
         url = reverse('portfolio:project_create')
         data = {
             'title': 'Project Without Superuser',
@@ -56,3 +65,24 @@ class TestProjectCreateView:
         
         with pytest.raises(ValueError, match="Aucun superutilisateur n'est défini. Créez un superutilisateur avant de continuer."):
             client.post(url, data)
+    
+    def test_create_project_redirect(self, client, superuser):
+        """Test that the view redirects to the detail page after creating a project."""
+        client.force_login(superuser)
+        url = reverse('portfolio:project_create')
+        data = {
+            'title': 'New Project',
+            'description': 'This is a new project',
+        }
+        response = client.post(url, data)
+        assert response.status_code == 302
+        assert response.url == reverse('portfolio:project_list')
+
+    def test_create_view_contains_form(self, client, superuser):
+        client.force_login(superuser)
+        url = reverse('portfolio:project_create')
+        response = client.get(url)
+        assert 'form' in response.context
+        assert isinstance(response.context['form'], ProjectForm)
+
+    
