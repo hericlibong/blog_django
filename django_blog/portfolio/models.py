@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 class Project(models.Model):
     """Model definition for Project."""
     title = models.CharField(max_length=255, unique=True)

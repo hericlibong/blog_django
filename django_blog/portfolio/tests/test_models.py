@@ -5,6 +5,7 @@ from portfolio.models import Project, ImageFolio
 
 User = get_user_model()
 
+
 @pytest.mark.django_db  # Active la base de données Django pour ce test
 class TestProjectModel:
     """Test module for Project model using pytest."""
@@ -45,20 +46,21 @@ class TestProjectModel:
         if valid:
             project.full_clean()  # Valide le modèle
             assert project.title == title
-            
+
         else:
             with pytest.raises(ValidationError):
                 project.full_clean()
 
+
 @pytest.mark.django_db
 class TestImageFolioModel:
     """Test module for ImageFolio model using pytest."""
-    
+
     @pytest.fixture
     def superuser(self):
         """Fixture to create a superuser."""
         return User.objects.create_superuser(username='admin', password='admin')
-    
+
     @pytest.fixture
     def project(self, superuser):
         """Fixture to create a project."""
@@ -67,7 +69,7 @@ class TestImageFolioModel:
             description='This is a test project',
             created_by=superuser
         )
-    
+
     @pytest.fixture
     def image_imagefolio_creation(self, project):
         """Fixture to create an image."""
@@ -85,4 +87,3 @@ class TestImageFolioModel:
         """Test the string representation of an imagefolio."""
         imagefolio = ImageFolio(project=project, image='project_images/test.jpg', alt_text='Test image')
         assert str(imagefolio) == f"Image for project: {project.title}"
-       

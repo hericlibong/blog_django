@@ -6,6 +6,7 @@ from portfolio.forms import ProjectForm
 
 User = get_user_model()
 
+
 @pytest.mark.django_db
 class TestProjectCreateView:
     """Test for ProjectCreateView"""
@@ -14,7 +15,7 @@ class TestProjectCreateView:
     def superuser(db):
         """Fixture to create a superuser."""
         return User.objects.create_superuser(username='admin', password='admin')
-    
+
     def test_create_view_status_code(self, client, superuser):
         """Test that the view returns a 200 status code for GET requests."""
         client.force_login(superuser)  # Connecte le superuser
@@ -30,7 +31,7 @@ class TestProjectCreateView:
         data = {
             'title': 'New Project',
             'description': 'This is a new project',
-            
+
         }
         response = client.post(url, data)
         assert response.status_code == 302  # Redirection après succès
@@ -50,7 +51,7 @@ class TestProjectCreateView:
         assert response.status_code == 200  # Reste sur la page avec des erreurs
         assert not Project.objects.filter(title='').exists()
         assert 'form' in response.context
-        assert response.context['form'].errors # Vérifie qu'il y a des erreurs
+        assert response.context['form'].errors  # Vérifie qu'il y a des erreurs
 
     def test_create_project_no_superuser(self, client):
         """Test that trying to create a project without a superuser raises ValueError."""
@@ -62,10 +63,10 @@ class TestProjectCreateView:
             'title': 'Project Without Superuser',
             'description': 'This project should not be created',
         }
-        
+
         with pytest.raises(ValueError, match="Aucun superutilisateur n'est défini. Créez un superutilisateur avant de continuer."):
             client.post(url, data)
-    
+
     def test_create_project_redirect(self, client, superuser):
         """Test that the view redirects to the detail page after creating a project."""
         client.force_login(superuser)
@@ -84,5 +85,3 @@ class TestProjectCreateView:
         response = client.get(url)
         assert 'form' in response.context
         assert isinstance(response.context['form'], ProjectForm)
-
-    

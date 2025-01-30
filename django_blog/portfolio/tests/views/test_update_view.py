@@ -6,6 +6,7 @@ from portfolio.forms import ProjectForm
 
 User = get_user_model()
 
+
 @pytest.mark.django_db
 class TestProjectUpdateView:
     """Tests for the ProjectUpdateView."""

@@ -8,6 +8,7 @@ from portfolio.views import ProjectDeleteView
 
 User = get_user_model()
 
+
 @pytest.mark.django_db
 class TestProjectDeleteView:
     """Tests for the ProjectDeleteView."""
@@ -51,7 +52,6 @@ class TestProjectDeleteView:
     def test_delete_project_calls_super_delete(self, client, superuser, project):
         """Test que la méthode delete de la classe parente est bien appelée."""
         client.force_login(superuser)
-        url = reverse('portfolio:project_delete', args=[project.id])
 
         # Créer une instance de la vue
         view = ProjectDeleteView()

@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 class ProjectCreateView(CreateView):
     model = Project
     form_class = ProjectForm
@@ -15,17 +16,17 @@ class ProjectCreateView(CreateView):
 
     def form_valid(self, form):
         """
-        Surcharger la méthode form_valid pour ajouter des messages personnalisés ou 
+        Surcharger la méthode form_valid pour ajouter des messages personnalisés ou
         des actions supplémentaires.
         """
         superuser = User.objects.filter(is_superuser=True).first()
         if not superuser:
             raise ValueError("Aucun superutilisateur n'est défini. Créez un superutilisateur avant de continuer.")
-        
+
         # Associe le superutilisateur comme auteur du projet
         form.instance.created_by = superuser
         return super().form_valid(form)
-    
+
 
 class ProjectUpdateView(UpdateView):
     model = Project
@@ -35,7 +36,7 @@ class ProjectUpdateView(UpdateView):
 
     def form_valid(self, form):
         """
-        Surcharger la méthode form_valid pour ajouter des messages personnalisés ou 
+        Surcharger la méthode form_valid pour ajouter des messages personnalisés ou
         des actions supplémentaires.
         """
         return super().form_valid(form)
@@ -48,7 +49,7 @@ class ProjectDeleteView(DeleteView):
 
     def delete(self, request, *args, **kwargs):
         """
-        Surcharger la méthode delete pour ajouter des messages personnalisés ou 
+        Surcharger la méthode delete pour ajouter des messages personnalisés ou
         des actions supplémentaires.
         """
         return super().delete(request, *args, **kwargs)

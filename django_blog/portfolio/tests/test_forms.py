@@ -1,6 +1,6 @@
-# tests forms for the portfolio app
 import pytest
 from portfolio.forms import ProjectForm
+
 
 @pytest.mark.django_db
 class TestProjectForm:
@@ -24,18 +24,18 @@ class TestProjectForm:
         form = ProjectForm(data=data)
         assert not form.is_valid()
         assert 'title' in form.errors
-        assert form.errors['title'] == ['Le titre doit contenir au moins 5 caractères.']    
+        assert form.errors['title'] == ['Le titre doit contenir au moins 5 caractères.']
 
     def test_empty_description(self):
         """Test that the form is invalid if the description is empty."""
-        data ={
+        data = {
             'title': 'Test project',
             'description': '',
         }
         form = ProjectForm(data=data)
         assert not form.is_valid()
         assert 'description' in form.errors
-    
+
     def test_widget_configuratio(self):
         """Test that widgets are properly configured."""
         form = ProjectForm()
@@ -48,4 +48,3 @@ class TestProjectForm:
         form = ProjectForm(data={'title': 'Test', 'description': 'Description valide.'})
         assert not form.is_valid()  # Validation échoue
         assert 'title' in form.errors
-    

@@ -3,9 +3,8 @@ from portfolio.models import Project
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 
-
-
 User = get_user_model()
+
 
 @pytest.mark.django_db
 class TestProjectListView:
@@ -19,19 +18,18 @@ class TestProjectListView:
     @pytest.fixture
     def projects(db, superuser, sample_image):
         """Fixture to create sample projects assigned to a superuser."""
-        # test_image = SimpleUploadedFile("test_image.jpg", b"file_content", content_type="image/jpeg")  
         return [
             Project.objects.create(
                 title='Project 1',
                 description='Description for project 1',
                 created_by=superuser,  # Correction : Associer un utilisateur
-                image = sample_image
+                image=sample_image
             ),
             Project.objects.create(
                 title='Project 2',
                 description='Description for project 2',
                 created_by=superuser,  # Correction : Associer un utilisateur
-                image = sample_image
+                image=sample_image
             ),
         ]
 
@@ -46,7 +44,7 @@ class TestProjectListView:
         url = reverse('portfolio:project_list')
         response = client.get(url)
         assert 'portfolio/project_list.html' in [t.name for t in response.templates]
-    
+
     # Tester si la vue renvoie les projets
     def test_list_view_context(self, client, projects):
         url = reverse('portfolio:project_list')
@@ -61,4 +59,3 @@ class TestProjectListView:
         response = client.get(url)
         assert response.status_code == 200  # Vérifie que la page se charge correctement
         assert "<li>Aucun projet disponible.</li>" in response.content.decode()  # Vérifie que le message est affiché
-       
