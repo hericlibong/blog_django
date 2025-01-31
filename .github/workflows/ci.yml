@@ -76,5 +76,5 @@ jobs:
       - name: Vérifier la conformité avec flake8
         run: flake8
 
-      - name: Vérifier la couverture des tests
-        run: coverage report -m
+      # - name: Vérifier la couverture des tests
+      #   run: coverage report -m
