@@ -14,7 +14,7 @@ jobs:
 
     services:
       postgres: # démarre un service postgresql pour la base de données des tests
-        image: postres:16  # version de postgresql compatible avec la version de l'application
+        image: postgres:16  # version de postgresql compatible avec la version de l'application
         env:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }} # récupère les variables d'environnement de github
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
