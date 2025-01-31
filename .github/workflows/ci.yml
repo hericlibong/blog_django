@@ -49,6 +49,7 @@ jobs:
           echo "DATABASE_URL=postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}" >> $GITHUB_ENV
 
       - name: Exécuter les migration de Django
+        working-directory: django_blog
         run: |
           python manage.py migrate
       
