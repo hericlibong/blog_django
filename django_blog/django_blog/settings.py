@@ -101,7 +101,7 @@ DATABASES = {
         'NAME': config('POSTGRES_DB'),
         'USER': config('POSTGRES_USER'),
         'PASSWORD': config('POSTGRES_PASSWORD'),
-        'HOST': config('POSTGRES_HOST', default='db'),
+        'HOST': 'localhost' if os.getenv('GITHUB_ACTIONS') == 'true' else config('POSTGRES_HOST', default='db'),
         'PORT': config('POSTGRES_PORT', default=5432, cast=int),
     }
 }
