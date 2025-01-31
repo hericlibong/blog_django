@@ -40,6 +40,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+      - name: Installer le projet en mode éditable
+        working-directory: django_blog
+        run: pip install -e .
+        
       - name: Configurer les variables d'environnement
         run: |
           echo "DJANGO_SECRET_KEY='${{ secrets.DJANGO_SECRET_KEY }}'" >> $GITHUB_ENV
@@ -66,7 +71,7 @@ jobs:
       
       - name: Lancer les tests avec pytest
         working-directory: django_blog
-        run: pytest --cov=django_blog --cov-report=term-missing
+        run: pytest --cov=portfolio --cov=accounts --cov-report=term-missing
 
       - name: Vérifier la conformité avec flake8
         run: flake8
