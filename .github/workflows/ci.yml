@@ -16,7 +16,7 @@ jobs:
       postgres: # démarre un service postgresql pour la base de données des tests
         image: postgres:16  # version de postgresql compatible avec la version de l'application
         env:
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }} # récupère les variables d'environnement de github
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER  }} # récupère les variables d'environnement de github
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         ports: 
@@ -40,10 +40,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-
-      # - name: Installer le projet en mode éditable
-      #   working-directory: django_blog
-      #   run: pip install -e .
         
       - name: Configurer les variables d'environnement
         run: |
@@ -75,6 +71,3 @@ jobs:
 
       - name: Vérifier la conformité avec flake8
         run: flake8
-
-      # - name: Vérifier la couverture des tests
-      #   run: coverage report -m
