@@ -112,6 +112,21 @@ jobs:
             echo "Waiting for image availability... ($i/10)"
             sleep 10
           done
+
+  deploy:
+    name: Deploy to Render
+    needs: containerize
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render Deploy
+        run: |
+          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys" \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{"image": "docker.io/'"${{ secrets.DOCKER_USERNAME }}"'/blog_app:latest"}'
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
     
     
 
