@@ -18,11 +18,13 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import include, path
 from django.conf.urls.static import static
+from django.views.generic import RedirectView
 
 # URLs de base
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('portfolio/', include('portfolio.urls', namespace='portfolio')),
+    path('', RedirectView.as_view(url='portfolio/projects/', permanent=True)),
    
 ]
 # Ajouter la gestion des médias en mode développement
