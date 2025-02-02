@@ -11,10 +11,10 @@
                 <img src="{{ project.image.url }}" alt="{{ project.title }}" style="max-width: 300px;">
                 <p>{{ project.description }}</p>
                 <a href="{% url 'portfolio:project_detail' project.id %}">Voir les détails</a>
-                
+                {% if user.is_authenticated and user.is_superuser %}
                 <a href="{% url 'portfolio:project_update' project.id %}">Modifier</a> |
                 <a href="{% url 'portfolio:project_delete' project.id %}">Supprimer</a>
-       
+        {% endif %}
             </li>
         {% empty %}
             <li>Aucun projet disponible.</li>
