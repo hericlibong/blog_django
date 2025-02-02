@@ -89,43 +89,43 @@ WSGI_APPLICATION = 'django_blog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-if os.getenv('GITHUB_ACTIONS') == 'true' or os.getenv('DOCKER_ENV') == 'true':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': config('POSTGRES_DB'),
-            'USER': config('POSTGRES_USER'),
-            'PASSWORD': config('POSTGRES_PASSWORD'),
-            'HOST': config('POSTGRES_HOST', default='db'),  # "db" = utilisé en local
-            'PORT': config('POSTGRES_PORT', default=5432, cast=int),
-        }
-    }
-elif os.getenv('RENDER') == 'true':  
-    DATABASES = {
-        'default': dj_database_url.config(default=config('DATABASE_URL'))
-    }
-else:
-    DATABASES = {
-        'default': dj_database_url.config(default=config('DATABASE_URL'))
-    }
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': config('POSTGRES_DB'),
-#         'USER': config('POSTGRES_USER'),
-#         'PASSWORD': config('POSTGRES_PASSWORD'),
-#         'HOST': config('POSTGRES_HOST'),
-#         'PORT': config('POSTGRES_PORT', default=5432, cast=int),
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+# if os.getenv('GITHUB_ACTIONS') == 'true' or os.getenv('DOCKER_ENV') == 'true':
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME': config('POSTGRES_DB'),
+#             'USER': config('POSTGRES_USER'),
+#             'PASSWORD': config('POSTGRES_PASSWORD'),
+#             'HOST': config('POSTGRES_HOST', default='db'),  # "db" = utilisé en local
+#             'PORT': config('POSTGRES_PORT', default=5432, cast=int),
+#         }
+#     }
+# elif os.getenv('RENDER') == 'true':  
+#     DATABASES = {
+#         'default': dj_database_url.config(default=config('DATABASE_URL'))
+#     }
+# else:
+#     DATABASES = {
+#         'default': dj_database_url.config(default=config('DATABASE_URL'))
+#     }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('POSTGRES_DB'),
+        'USER': config('POSTGRES_USER'),
+        'PASSWORD': config('POSTGRES_PASSWORD'),
+        'HOST': config('POSTGRES_HOST'),
+        'PORT': config('POSTGRES_PORT', default=5432, cast=int),
+    }
+}
 
 
 
