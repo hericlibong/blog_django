@@ -6,8 +6,8 @@ services:
     volumes:
       - .:/app
       - ./media:/app/django_blog/media  # Montage correct du dossier media
-    depends_on:
-      - db
+    # depends_on:
+    #   - db
     environment:
       - SECRET_KEY=${SECRET_KEY}
       - DEBUG=${DEBUG}
