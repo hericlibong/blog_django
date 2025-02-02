@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from decouple import config, Csv
 import os
+import dj_database_url
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -95,16 +96,23 @@ WSGI_APPLICATION = 'django_blog.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('POSTGRES_DB'),
-        'USER': config('POSTGRES_USER'),
-        'PASSWORD': config('POSTGRES_PASSWORD'),
-        'HOST': 'localhost' if os.getenv('GITHUB_ACTIONS') == 'true' else config('POSTGRES_HOST', default='db'),
-        'PORT': config('POSTGRES_PORT', default=5432, cast=int),
+if os.getenv('GITHUB_ACTIONS') == 'true' or os.getenv('DOCKER_ENV') == 'true':
+    # Configuration pour Docker et GitHub Actions
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('POSTGRES_DB'),
+            'USER': config('POSTGRES_USER'),
+            'PASSWORD': config('POSTGRES_PASSWORD'),
+            'HOST': config('POSTGRES_HOST', default='db'),  # "db" = service défini dans docker-compose.yml
+            'PORT': config('POSTGRES_PORT', default=5432, cast=int),
+        }
     }
-}
+else:
+    # Configuration pour Render (Production)
+    DATABASES = {
+        'default': dj_database_url.config(default=config('DATABASE_URL'))
+    }
 
 
 
