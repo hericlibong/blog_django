@@ -97,19 +97,21 @@ WSGI_APPLICATION = 'django_blog.wsgi.application'
 # }
 
 if os.getenv('GITHUB_ACTIONS') == 'true' or os.getenv('DOCKER_ENV') == 'true':
-    # Configuration pour Docker et GitHub Actions
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': config('POSTGRES_DB'),
             'USER': config('POSTGRES_USER'),
             'PASSWORD': config('POSTGRES_PASSWORD'),
-            'HOST': config('POSTGRES_HOST', default='db'),  # "db" = service défini dans docker-compose.yml
+            'HOST': config('POSTGRES_HOST', default='db'),  # "db" = utilisé en local
             'PORT': config('POSTGRES_PORT', default=5432, cast=int),
         }
     }
+elif os.getenv('RENDER') == 'true':  
+    DATABASES = {
+        'default': dj_database_url.config(default=config('DATABASE_URL'))
+    }
 else:
-    # Configuration pour Render (Production)
     DATABASES = {
         'default': dj_database_url.config(default=config('DATABASE_URL'))
     }
