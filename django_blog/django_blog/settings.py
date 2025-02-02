@@ -14,6 +14,9 @@ from pathlib import Path
 from decouple import config, Csv
 import os
 import dj_database_url
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -45,8 +48,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Ajout des applications du projet
     'accounts',
     'portfolio',
+
+    # Cloudinary
+    'cloudinary',
+    'cloudinary_storage',
+    
     
 ]
 
@@ -160,15 +170,32 @@ USE_I18N = True
 USE_TZ = True
 
 
+# Configuration spécifique pour Cloudinary
+cloudinary.config(
+    cloud_name=config('CLOUDINARY_CLOUD_NAME'),
+    api_key=config('CLOUDINARY_API_KEY'),
+    api_secret=config('CLOUDINARY_API_SECRET')
+)
+
+# Configuration de  Django pour utiliser Cloudinary
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC8_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Media files (user uploaded files)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# Configuration spécifique pour Render
+if os.getenv('RENDER'):
+    STATICFILES_STORAGES = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 
 
