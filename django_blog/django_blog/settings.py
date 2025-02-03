@@ -171,6 +171,7 @@ USE_TZ = True
 
 
 # Configuration spécifique pour Cloudinary
+
 cloudinary.config(
     cloud_name=config('CLOUDINARY_CLOUD_NAME'),
     api_key=config('CLOUDINARY_API_KEY'),
