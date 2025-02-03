@@ -173,13 +173,17 @@ USE_TZ = True
 # Configuration spécifique pour Cloudinary
 
 cloudinary.config(
-    cloud_name=config('CLOUDINARY_CLOUD_NAME'),
-    api_key=config('CLOUDINARY_API_KEY'),
-    api_secret=config('CLOUDINARY_API_SECRET')
+    cloud_name=config('CLOUDINARY_CLOUD_NAME', default=''),
+    api_key=config('CLOUDINARY_API_KEY', default=''),
+    api_secret=config('CLOUDINARY_API_SECRET', default='')
 )
 
 # Configuration de  Django pour utiliser Cloudinary
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+DEFAULT_FILE_STORAGE ='cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# Configuration spécifique pour Render
+if os.getenv('RENDER'):
+    STATICFILES_STORAGES = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Static files (CSS, JavaScript, Images)
@@ -193,9 +197,7 @@ STATIC8_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-# Configuration spécifique pour Render
-if os.getenv('RENDER'):
-    STATICFILES_STORAGES = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 
 
