@@ -126,6 +126,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create Superuser
+        working-directory: django_blog
         run: python manage.py createsuperuser
         env:
           DJANGO_SUPERUSER_USERNAME: admin
