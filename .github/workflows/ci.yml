@@ -146,19 +146,28 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Debug environment variables
+        run: |
+          echo "POSTGRES_HOST=$POSTGRES_HOST"
+          echo "DATABASE_URL=$DATABASE_URL"
+        env:
+          # For cette étape, nous définissons explicitement
+          POSTGRES_HOST: postgres
+          DATABASE_URL: postgres://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/${{ secrets.POSTGRES_DB }}
+
       - name: Create Superuser
         working-directory: django_blog
         run: python manage.py createsuperuser --noinput
         env:
+          CI: True  # Indique à Django qu'on est en CI
           DJANGO_SUPERUSER_USERNAME: admin
           DJANGO_SUPERUSER_EMAIL: hericlibong@gmail.com
           DJANGO_SUPERUSER_PASSWORD: ${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
-          # Variables de configuration de PostgreSQL
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_HOST: postgres    # IMPORTANT : Utilisez le nom du service, ici "postgres"/
-          # Mettez à jour DATABASE_URL pour pointer vers le service postgres
+          POSTGRES_HOST: postgres
+          POSTGRES_PORT: 5432
           DATABASE_URL: postgres://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/${{ secrets.POSTGRES_DB }}
           CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
@@ -171,6 +180,7 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
             -H "Content-Type: application/json" \
             -d '{"image": "docker.io/'"${{ secrets.DOCKER_USERNAME }}"'/blog_app:latest"}'
+
 
 
         
