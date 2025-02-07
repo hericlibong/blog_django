@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+
   pull_request:
     branches:
       - main
@@ -14,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      postgres:
-        image: postgres:16
+      postgres: # démarre un service postgresql pour la base de données des tests
+        image: postgres:16  # version de postgresql compatible avec la version de l'application
         env:
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER  }} # récupère les variables d'environnement de github
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         ports: 
@@ -48,21 +49,20 @@ jobs:
           echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> $GITHUB_ENV
           echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> $GITHUB_ENV
           echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> $GITHUB_ENV
-          echo "POSTGRES_HOST=localhost" >> $GITHUB_ENV
+          echo "POSTGRES_HOST=localhost" >> $GITHUB_ENV  # Forcer l'utilisation de localhost
           echo "POSTGRES_PORT=5432" >> $GITHUB_ENV
           echo "DATABASE_URL=postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}" >> $GITHUB_ENV
           echo "DJANGO_SETTINGS_MODULE=django_blog.settings" >> $GITHUB_ENV
-
-      - name: Attendre que PostgreSQL soit prêt
+      - name: Attendre que PostgreSQL soir prêt
         run: |
           for i in {1..10}; do
             if pg_isready -U ${{ secrets.POSTGRES_USER }} -h localhost -p 5432; then
               break
-            fi
+              fi
             sleep 2
           done    
       
-      - name: Exécuter les migrations de Django
+      - name: Exécuter les migration de Django
         working-directory: django_blog
         run: |
           python manage.py migrate
@@ -88,25 +88,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Connexion sécurisée à Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          password: ${{ secrets.DOCKER_PASSWORD }} # Utiliser un token pour le mot de passe provenant de Docker Hub test
 
+      # Construction et tagging de l'image Docker
       - name: Build and tag Docker image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/blog_app:${{ github.sha }} .
           docker tag ${{ secrets.DOCKER_USERNAME }}/blog_app:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/blog_app:latest
 
+      # Vérification que l'image est bien créée
       - name: Verify Docker image before push
         run: docker images | grep "${{ secrets.DOCKER_USERNAME }}/blog_app"
 
+      # Pousser les images sur Docker Hub
       - name: Push Docker image to Docker Hub
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/blog_app:${{ github.sha }}
           docker push ${{ secrets.DOCKER_USERNAME }}/blog_app:latest
 
+      # Vérifier la disponibilité de l'image après le push
       - name: Wait for Docker image to be available
         run: |
           for i in {1..10}; do
@@ -118,89 +123,23 @@ jobs:
   deploy:
     name: Deploy to Render
     needs: containerize
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' 
     runs-on: ubuntu-latest
-
-    services:
-      pgdb:
-        image: postgres:16
-        env:
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U $POSTGRES_USER"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-
+    env:
+      RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+      DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+      CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+      CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+      CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.12'
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      # Étape de debug pour visualiser la valeur des variables (avant de supprimer .env).
-      # GitHub masquera les secrets, donc si vous voyez "***", c’est GitHub qui masque la valeur.
-      - name: Debug environment variables
-        run: |
-          echo "POSTGRES_HOST=$POSTGRES_HOST"
-          echo "DATABASE_URL=$DATABASE_URL"
-        env:
-          # Variables pour votre CI
-          POSTGRES_HOST: postgres
-          DATABASE_URL: postgres://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/${{ secrets.POSTGRES_DB }}
-
-      # Supprimer le fichier .env pour forcer Django à n'utiliser que les variables d'environnement
-      - name: Remove .env file to force env var usage
-        run: rm -f .env
-
-      # Création du superuser
-      - name: Create Superuser
-        working-directory: django_blog
-        run: python manage.py createsuperuser --noinput
-        env:
-          # Indique à settings.py qu'on est en CI => condition if (os.environ.get("CI") == "true")
-          CI: "true"
-
-          # Variables pour la connexion Postgres
-          PGDB: pgdb
-          PGDB_USER: ${{ secrets.POSTGRES_USER }}
-          PGDB_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          PGDB_DB: ${{ secrets.POSTGRES_DB }}
-          PGDB_PORT: 5432
-          # DATABASE_URL si besoin, mais ici c'est votre code qui lit POSTGRES_HOST/DB/USER/PASSWORD
-          DATABASE_URL: pdgb://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@pgbd:5432/${{ secrets.POSTGRES_DB }}
-
-          # Variables superuser
-          DJANGO_SUPERUSER_USERNAME: admin
-          DJANGO_SUPERUSER_EMAIL: hericlibong@gmail.com
-          DJANGO_SUPERUSER_PASSWORD: ${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
-
-          # Autres variables (Cloudinary, etc.)
-          CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
-          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
-          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
-          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
-
       - name: Trigger Render Deploy
         run: |
           curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys" \
             -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
             -H "Content-Type: application/json" \
             -d '{"image": "docker.io/'"${{ secrets.DOCKER_USERNAME }}"'/blog_app:latest"}'
-
-
-
-
         
     
     
