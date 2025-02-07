@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',  # avant 'django.contrib.staticfiles'
     'django.contrib.staticfiles',
-    'django.contrib.staticfiles',
 
     # Ajout des applications du projet
     'accounts',
