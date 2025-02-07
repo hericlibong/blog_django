@@ -122,7 +122,7 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      postgres:
+      pgdb:
         image: postgres:16
         env:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
@@ -172,13 +172,13 @@ jobs:
           CI: "true"
 
           # Variables pour la connexion Postgres
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_HOST: postgres
-          POSTGRES_PORT: 5432
+          PGDB: pgdb
+          PGDB_USER: ${{ secrets.POSTGRES_USER }}
+          PGDB_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          PGDB_DB: ${{ secrets.POSTGRES_DB }}
+          PGDB_PORT: 5432
           # DATABASE_URL si besoin, mais ici c'est votre code qui lit POSTGRES_HOST/DB/USER/PASSWORD
-          DATABASE_URL: postgres://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/${{ secrets.POSTGRES_DB }}
+          DATABASE_URL: pdgb://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@pgbd:5432/${{ secrets.POSTGRES_DB }}
 
           # Variables superuser
           DJANGO_SUPERUSER_USERNAME: admin
