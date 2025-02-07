@@ -127,9 +127,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4  # Ajoutez cette étape
+
+      - name: installer Python 3.12
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.12
+
+      - name: installer les dépendances
+
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
       - name: Create Superuser
         working-directory: ./django_blog  # Chemin correct
-        run: python manage.py createsuperuser
+        run: python manage.py createsuperuser --noinput
         env:
           DJANGO_SUPERUSER_USERNAME: admin
           DJANGO_SUPERUSER_EMAIL: hericlibong@gmail.com
