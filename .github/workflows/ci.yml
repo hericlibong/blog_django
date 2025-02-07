@@ -126,21 +126,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4  # Ajoutez cette étape
+        uses: actions/checkout@v4
 
-      - name: installer Python 3.12
+      - name: Installer Python 3.12
         uses: actions/setup-python@v2
         with:
           python-version: 3.12
 
-      - name: installer les dépendances
-
+      - name: Installer les dépendances
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Configurer les variables d'environnement pour la BDD
+        run: |
+          echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> $GITHUB_ENV
+          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> $GITHUB_ENV
+          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> $GITHUB_ENV
+          echo "POSTGRES_HOST=localhost" >> $GITHUB_ENV
+          echo "POSTGRES_PORT=5432" >> $GITHUB_ENV
+
       - name: Create Superuser
-        working-directory: ./django_blog  # Chemin correct
+        working-directory: ./django_blog  # Chemin vers le dossier contenant manage.py
         run: python manage.py createsuperuser --noinput
         env:
           DJANGO_SUPERUSER_USERNAME: admin
@@ -160,6 +167,7 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
             -H "Content-Type: application/json" \
             -d '{"image": "docker.io/'"${{ secrets.DOCKER_USERNAME }}"'/blog_app:latest"}'
+
         
     
     
