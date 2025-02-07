@@ -3,8 +3,8 @@ from django.contrib.auth import get_user_model
 import os
 
 User = get_user_model()
-
 password = os.getenv("DJANGO_SUPERUSER_PASSWORD", "mot_de_passe")
+
 
 class Command(BaseCommand):
     help = 'Create a superuser'
