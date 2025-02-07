@@ -27,4 +27,6 @@ EXPOSE 8000
 # 7) Commande de démarrage par défaut
 #CMD ["sh", "-c", "../wait-for-postgres.sh db python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
 # Remplacez le CMD actuel par :
-CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+#CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py migrate && python manage.py create_superuser && python manage.py runserver 0.0.0.0:8000"]
+

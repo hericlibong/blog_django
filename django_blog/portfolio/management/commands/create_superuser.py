@@ -1,8 +1,10 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
+import os
 
 User = get_user_model()
 
+password = os.getenv("DJANGO_SUPERUSER_PASSWORD", "mot_de_passe")
 
 class Command(BaseCommand):
     help = 'Create a superuser'
@@ -12,6 +14,6 @@ class Command(BaseCommand):
             User.objects.create_superuser(
                 username='admin',
                 email='hericlibong@gmail.com',
-                password='mot_de_passe'
+                password=password
             )
             self.stdout.write('Superuser created successfully')

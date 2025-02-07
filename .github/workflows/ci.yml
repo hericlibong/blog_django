@@ -5,10 +5,12 @@ on:
   push:
     branches:
       - main
+      - development/*
 
   pull_request:
     branches:
       - main
+      - development/*
 
 jobs:
   tests:
@@ -77,7 +79,9 @@ jobs:
   containerize:
     name: Créer et pousser l'image Docker
     needs: tests
-    if: github.ref == 'refs/heads/main'
+    
+    # Remettre les branches sur lesquelles on veut déployer ici
+
     runs-on: ubuntu-latest
     env:
       CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
@@ -123,7 +127,9 @@ jobs:
   deploy:
     name: Deploy to Render
     needs: containerize
-    if: github.ref == 'refs/heads/main' 
+    
+    # Remettre les branches sur lesquelles on veut déployer ici
+
     runs-on: ubuntu-latest
     env:
       RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
