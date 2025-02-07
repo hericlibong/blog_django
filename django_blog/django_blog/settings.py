@@ -147,30 +147,56 @@ WSGI_APPLICATION = 'django_blog.wsgi.application'
 #     }
 # }
 
-if os.environ.get("CI") == "True":
-    # En CI, on se base uniquement sur les variables d'environnement du système
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get("POSTGRES_DB"),
-            'USER': os.environ.get("POSTGRES_USER"),
-            'PASSWORD': os.environ.get("POSTGRES_PASSWORD"),
-            'HOST': os.environ.get("POSTGRES_HOST"),
-            'PORT': os.environ.get("POSTGRES_PORT", "5432"),
-        }
-    }
+# if os.environ.get("CI") == "True":
+#     # En CI, on se base uniquement sur les variables d'environnement du système
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME': os.environ.get("POSTGRES_DB"),
+#             'USER': os.environ.get("POSTGRES_USER"),
+#             'PASSWORD': os.environ.get("POSTGRES_PASSWORD"),
+#             'HOST': os.environ.get("POSTGRES_HOST"),
+#             'PORT': os.environ.get("POSTGRES_PORT", "5432"),
+#         }
+#     }
+# else:
+#     # En local, on lit les variables d'environnement en passant par le fichier .env si nécessaire
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'NAME': config('POSTGRES_DB'),
+#             'USER': config('POSTGRES_USER'),
+#             'PASSWORD': config('POSTGRES_PASSWORD'),
+#             'HOST': config('POSTGRES_HOST', default='db'),
+#             'PORT': config('POSTGRES_PORT', default='5432'),
+#         }
+#     }
+
+if os.environ.get("CI") == "true":
+    # On récupère directement depuis os.environ
+    POSTGRES_DB = os.environ.get("POSTGRES_DB")
+    POSTGRES_USER = os.environ.get("POSTGRES_USER")
+    POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD")
+    POSTGRES_HOST = os.environ.get("POSTGRES_HOST")
+    POSTGRES_PORT = os.environ.get("POSTGRES_PORT", "5432")
 else:
-    # En local, on lit les variables d'environnement en passant par le fichier .env si nécessaire
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': config('POSTGRES_DB'),
-            'USER': config('POSTGRES_USER'),
-            'PASSWORD': config('POSTGRES_PASSWORD'),
-            'HOST': config('POSTGRES_HOST', default='db'),
-            'PORT': config('POSTGRES_PORT', default='5432'),
-        }
+    # En local, on utilise decouple qui charge aussi le fichier .env
+    POSTGRES_DB = config('POSTGRES_DB')
+    POSTGRES_USER = config('POSTGRES_USER')
+    POSTGRES_PASSWORD = config('POSTGRES_PASSWORD')
+    POSTGRES_HOST = config('POSTGRES_HOST', default='db')
+    POSTGRES_PORT = config('POSTGRES_PORT', default='5432')
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': POSTGRES_DB,
+        'USER': POSTGRES_USER,
+        'PASSWORD': POSTGRES_PASSWORD,
+        'HOST': POSTGRES_HOST,
+        'PORT': POSTGRES_PORT,
     }
+}
 
 
 
