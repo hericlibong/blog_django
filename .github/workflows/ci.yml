@@ -125,8 +125,10 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4  # Ajoutez cette étape
       - name: Create Superuser
-        working-directory: django_blog
+        working-directory: ./django_blog  # Chemin correct
         run: python manage.py createsuperuser
         env:
           DJANGO_SUPERUSER_USERNAME: admin
