@@ -49,16 +49,21 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    
+
+     # Cloudinary, Whitenoise et staticfiles
     'whitenoise.runserver_nostatic',  # avant 'django.contrib.staticfiles'
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
 
     # Ajout des applications du projet
     'accounts',
     'portfolio',
 
-    # Cloudinary
-    'cloudinary',
-    'cloudinary_storage',
+   
+    
+   
     
     
 ]
@@ -171,14 +176,6 @@ cloudinary.config(
     api_secret=config('CLOUDINARY_API_SECRET', default='')
 )
 
-# Configuration de  Django pour utiliser Cloudinary
-DEFAULT_FILE_STORAGE ='cloudinary_storage.storage.MediaCloudinaryStorage'
-
-# Configuration spécifique pour Render
-if os.getenv('RENDER'):
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
@@ -189,8 +186,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Media files (user uploaded files)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+# Configuration de  Django pour utiliser Cloudinary
+DEFAULT_FILE_STORAGE ='cloudinary_storage.storage.MediaCloudinaryStorage'
 
-
+# Configuration spécifique pour Render
+if os.getenv('RENDER'):
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 AUTH_USER_MODEL = 'accounts.UserAccount'
 
