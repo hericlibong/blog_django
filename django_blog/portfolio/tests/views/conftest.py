@@ -3,6 +3,7 @@ import shutil
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from pathlib import Path
+from unittest.mock import patch
 
 
 @pytest.fixture(scope='session', autouse=True)
@@ -21,3 +22,12 @@ def sample_image():
     Crée une image factice en mémoire pour les tests et retourne un fichier temporaire.
     """
     return SimpleUploadedFile("test_image.jpg", b"fake image data", content_type="image/jpeg")
+
+
+@pytest.fixture(autouse=True)  # <-- Fixture globale pour tous les tests
+def mock_cloudinary_upload():
+    """Simule l'upload d'images vers Cloudinary."""
+    with patch("cloudinary.uploader.upload_resource") as mock_upload:
+        # Retourne une URL fictive pour l'image
+        mock_upload.return_value = "https://res.cloudinary.com/fake/image.jpg"
+        yield
