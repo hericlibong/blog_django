@@ -85,7 +85,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}  # récupérer les variables d'environnement de github
+      
       CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
       CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
       CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
@@ -136,7 +136,7 @@ jobs:
       RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
       DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+      
       CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
       CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
       CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
