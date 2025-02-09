@@ -58,4 +58,3 @@ class TestProjectListView:
         url = reverse('portfolio:project_list')
         response = client.get(url)
         assert response.status_code == 200  # Vérifie que la page se charge correctement
-        
