@@ -1,47 +1,53 @@
 {% extends "base.html" %}
 
-{% block title %}Liste des Projets{% endblock %}
+{% block title %}Projets{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h1 class="text-center text-primary my-4">Liste des Projets</h1>
+    <div class="row">
+        <!-- Section des Projets -->
+        <div class="col-md-8">
+            <h1 class="pb-4 mb-4 fst-italic border-bottom">Mes Projets</h1>
 
-    {% if projects %}
-        <div class="row">
             {% for project in projects %}
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card shadow-sm">
-                        {% if project.image %}
-                            <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
-                        {% endif %}
+            <div class="card project-card mb-4">
+                <div class="row g-0 align-items-center">
+                    <!-- Contenu du projet (maintenant à gauche) -->
+                    <div class="col-md-8 order-md-1 order-2">
                         <div class="card-body">
-                            <h5 class="card-title">
-                                <a href="{% url 'portfolio:project_detail' project.id %}" class="text-decoration-none text-dark">
-                                    {{ project.title }}
-                                </a>
-                            </h5>
+                            <h3 class="card-title">{{ project.title }}</h3>
                             <p class="card-text">{{ project.description|truncatewords:20 }}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <a href="{% url 'portfolio:project_detail' project.id %}" class="btn btn-primary btn-sm">Voir détails</a>
-                                {% if user.is_authenticated and user.is_superuser %}
-                                    <div>
-                                        <a href="{% url 'portfolio:project_update' project.id %}" class="btn btn-warning btn-sm">Modifier</a>
-                                        <a href="{% url 'portfolio:project_delete' project.id %}" class="btn btn-danger btn-sm">Supprimer</a>
-                                    </div>
-                                {% endif %}
-                            </div>
+                            <a href="{% url 'portfolio:project_detail' project.id %}" class="btn btn-primary">Voir plus</a>
+                            {% if user.is_authenticated and user.is_superuser %}
+                                <a href="{% url 'portfolio:project_update' project.id %}" class="btn btn-warning">Modifier</a>
+                                <a href="{% url 'portfolio:project_delete' project.id %}" class="btn btn-danger">Supprimer</a>
+                            {% endif %}
                         </div>
                     </div>
+                    <!-- Image du projet (maintenant à droite) -->
+                    <div class="col-md-4 order-md-2 order-1">
+                        <img src="{{ project.image.url }}" class="img-fluid project-img" alt="{{ project.title }}">
+                    </div>
                 </div>
+            </div>>  
+            {% empty %}
+            <p>Aucun projet disponible.</p>
             {% endfor %}
         </div>
-    {% else %}
-        <p class="text-center text-muted">Aucun projet disponible.</p>
-    {% endif %}
+
+
+
+        
+
+        <!-- Sidebar -->
+        <div class="col-md-4">
+            <div class="position-sticky" style="top: 2rem;">
+                <div class="p-4 mb-3 bg-body-tertiary rounded">
+                    <h4 class="fst-italic">Me</h4>
+                    {% include "portfolio/about.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
-
-
-
-
-

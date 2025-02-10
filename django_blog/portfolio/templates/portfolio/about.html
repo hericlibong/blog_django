@@ -1,14 +1,10 @@
-{% extends "base.html" %}
 {% load static %}
 
-{% block title %}À propos de moi{% endblock %}
-
-{% block content %}
-    <h1>À propos de moi</h1>
+  
     <p>Bienvenue sur ma page personnelle ! Voici quelques informations sur moi.</p>
     
     <!-- Ajouter une image -->
-    <img src="{% static 'about/profile.jpeg' %}" alt="Ma photo" style="max-width: 300px; border-radius: 50%;">
+    <img src="{% static 'about/profile.jpeg' %}" class="about-profile-img" alt="Photo de profil">
 
     <p>Je suis un développeur passionné par le développement web et les solutions back-end.</p>
-{% endblock %}
+
