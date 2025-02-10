@@ -1,10 +1,15 @@
 {% load static %}
 
-  
-    <p>Bienvenue sur ma page personnelle ! Voici quelques informations sur moi.</p>
-    
-    <!-- Ajouter une image -->
-    <img src="{% static 'about/profile.jpeg' %}" class="about-profile-img" alt="Photo de profil">
+    <!-- ✅ Sidebar : Section "À propos" sous forme de carte -->
 
-    <p>Je suis un développeur passionné par le développement web et les solutions back-end.</p>
+    <div class="card about-card ">
+        <div class="card-body text-center">
+            <!-- ✅ Image arrondie -->
+            <img src="{% static 'about/profile.jpeg' %}" class="about-profile-img rounded-circle" alt="Photo de profil">
+            
+            <h5 class="card-title mt-3">À propos</h5>
+            <p class="card-text">Je suis un développeur passionné par le développement web et les solutions back-end.</p>
+        </div>
+    </div>
+
 

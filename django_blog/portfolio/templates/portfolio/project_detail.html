@@ -3,26 +3,37 @@
 {% block title %}{{ project.title }}{% endblock %}
 
 {% block content %}
-    <h1>{{ project.title }}</h1>
-    <img src="{{ project.image.url }}" alt="{{ project.title }}" style="max-width: 500px;">
-    <p>{{ project.description }}</p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7 project-detail-container">  
+            <!-- ✅ Titre du projet -->
+            <h1 class="text-center">{{ project.title }}</h1>
+            <p class="text-muted text-center">{{ project.description|truncatewords:20 }}</p>
 
-    <h2>Galerie d'images</h2>
-    <ul>
-        {% for image in project.images.all %}
-            <li>
-                <img src="{{ image.file.url }}" alt="{{ image.caption }}" style="max-width: 300px;">
-                <p>{{ image.caption }}</p>
-            </li>
-        {% empty %}
-            <li>Pas d'images disponibles pour ce projet.</li>
-        {% endfor %}
-            {% if user.is_authenticated and user.is_superuser %}
-            <a href="{% url 'portfolio:project_update' project.id %}">Modifier</a> |
-            <a href="{% url 'portfolio:project_delete' project.id %}">Supprimer</a>
-            {% endif %}
-    </ul>
+            <!-- ✅ Image principale -->
+            <div class="project-image-container">
+                <img src="{{ project.image.url }}" class="img-fluid rounded" alt="{{ project.title }}">
+            </div>
 
-    <a href="{% url 'portfolio:project_list' %}">Retour à la liste des projets</a>
+            <!-- ✅ Auteur et actions (visible que par superuser) -->
+            <div class="project-meta mt-3 text-center">
+                <p class="text-muted">Ajouté par : {{ project.created_by.username }}</p>
+                {% if user.is_authenticated and user.is_superuser %}
+                    <a href="{% url 'portfolio:project_update' project.id %}" class="btn btn-outline-primary btn-sm">Modifier</a>
+                    <a href="{% url 'portfolio:project_delete' project.id %}" class="btn btn-outline-danger btn-sm">Supprimer</a>
+                {% endif %}
+            </div>
+
+            <!-- ✅ Description complète -->
+            <div class="project-description mt-4">
+                <p>{{ project.description }}</p>
+            </div>
+
+            <!-- ✅ Bouton de retour -->
+            <div class="text-center mt-4">
+                <a href="{% url 'portfolio:project_list' %}" class="btn btn-secondary">← Retour à la liste des projets</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
-

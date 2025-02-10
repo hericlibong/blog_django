@@ -47,6 +47,7 @@
 
 .nav-scroller .container {
     justify-content: space-between;
+    
 }
 
 .nav-scroller a {
@@ -56,10 +57,20 @@
     transition: color 0.3s ease;
     font-family: "Playfair Display", Georgia, "Times New Roman", serif; /*lien du navbar*/
     text-transform: uppercase;
+  
 }
 
 .nav-scroller a:hover {
     color: #0056b3;
+}
+
+/* Navbar alignée avec le reste du contenu */
+.navbar {
+    max-width: 80%;
+    margin: 0 auto;
+    border-radius: 10px;  /* Coins légèrement arrondis */
+    padding: 10px 15px;
+    background-color: #f8f9fa;  /* Couleur claire */
 }
 
 /* ✅ Header */
@@ -73,6 +84,21 @@ header h1 {
     font-weight: bold;
     color: #333;
 }
+
+/* Conteneur général du header et de la navbar */
+.header-container {
+    max-width: 80%;  /* Même largeur que le contenu des projets */
+    margin: 0 auto;  /* Centre horizontalement */
+}
+
+/* Ajustement du header */
+.header-container h1 {
+    text-align: center;  /* Centre le texte */
+    font-size: 2rem;  /* Ajuste la taille du titre */
+}
+
+
+
 
 /* ✅ Footer */
 footer {
@@ -94,12 +120,28 @@ footer {
 /* Ajuste la largeur des cartes et centre-les */
 
 
+/* ✅ Style des cartes du feed */
+
+
+
+
 /* Projet : Largeur réduite et centré */
 .project-card {
     max-width: 80%;  
     margin: 0 auto;  
     border-radius: 10px;
+    border: none !important;  /* Supprime toutes les bordures */
+    background-color: transparent;  /* Fond transparent */
+    padding-bottom: 15px;  /* Espacement avec la ligne de séparation */
+    border-bottom: 1px solid #434546;
 }
+
+/* ✅ Séparateur fin entre chaque carte */
+.project-card:not(:last-child) {
+    border-bottom: 1px solid #777777;  /* Ligne grise claire */
+    padding-bottom: 20px;
+}
+
 
 /* L’image reste bien ajustée sans déformation */
 .project-img {
@@ -114,6 +156,72 @@ footer {
 .card-body {
     padding: 20px;
     text-align: left;  /* Assure un bon alignement du texte */
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* ✅ Style pour la carte "À propos" */
+.about-card {
+    max-width: 800px;  /* Limite la largeur de la carte */
+    margin: auto;  /* Centre la carte dans la sidebar */
+    border-radius: 10px;  /* Coins arrondis */
+    padding: 15px;
+    background: #ffffff;  /* Fond blanc */
+    
+}
+
+/* ✅ Style pour l'image de profil */
+.about-profile-img {
+    width: 120px;  /* Taille de l'image */
+    height: 120px;
+    object-fit: cover;  /* Garde une belle proportion */
+    border: 4px solid #dee2e6;  /* Bordure subtile */
+}
+
+
+/* ✅ Style pour la page détail */
+
+/* ✅ Conteneur principal centré */
+.project-detail-container {
+    max-width: 680px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* ✅ Image principale en grand format */
+.project-image-container img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover; /* Ajuste l’image sans la déformer */
+    border-radius: 8px;
+}
+
+/* ✅ Métadonnées du projet */
+.project-meta {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* ✅ Boutons d’action */
+.project-meta .btn {
+    margin: 5px;
+}
+
+/* ✅ Description */
+.project-description p {
+    text-align: justify;
+    font-size: 1.1rem;
+}
+
+/* ✅ Bouton de retour */
+.text-center .btn-secondary {
+    font-size: 1rem;
+    padding: 10px 20px;
 }
 
 
