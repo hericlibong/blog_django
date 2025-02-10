@@ -60,11 +60,12 @@
   
 }
 
+
 .nav-scroller a:hover {
     color: #0056b3;
 }
 
-/* Navbar alignée avec le reste du contenu */
+/* Navbar alignée avec le reste du contenu vérif */
 .navbar {
     max-width: 80%;
     margin: 0 auto;
