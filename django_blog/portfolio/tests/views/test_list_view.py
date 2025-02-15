@@ -51,7 +51,9 @@ class TestProjectListView:
         response = client.get(url)
         assert response.status_code == 200
         assert 'projects' in response.context
-        assert list(response.context['projects']) == projects
+        # assert list(response.context['projects']) == projects
+        # ✅ Adapter au nouvel ordre DESC en inversant la liste
+        assert list(response.context['projects']) == projects[::-1]
 
     def test_list_view_no_projects(self, client):
         """Test l'affichage du message quand il n'y a aucun projet."""

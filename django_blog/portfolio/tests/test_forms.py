@@ -1,5 +1,6 @@
 import pytest
 from portfolio.forms import ProjectForm
+from ckeditor.widgets import CKEditorWidget
 
 
 @pytest.mark.django_db
@@ -36,12 +37,11 @@ class TestProjectForm:
         assert not form.is_valid()
         assert 'description' in form.errors
 
-    def test_widget_configuratio(self):
+    def test_widget_configuration(self):
         """Test that widgets are properly configured."""
         form = ProjectForm()
         assert form.fields['title'].widget.attrs['class'] == 'form-control'
-        assert form.fields['description'].widget.attrs['class'] == 'form-control'
-        assert form.fields['description'].widget.attrs['rows'] == 5
+        assert isinstance(form.fields['description'].widget, CKEditorWidget)
 
     def test_clean_title_method(self):
         """Test the clean_title method."""
