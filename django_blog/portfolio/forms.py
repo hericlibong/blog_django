@@ -17,11 +17,11 @@ class ProjectForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Entrez le titre du projet'
             }),
-            'description': forms.Textarea(attrs={
-                'class': 'form-control',
-                'placeholder': 'Entrez une description détaillée du projet',
-                'rows': 5
-            }),
+            # 'description': forms.Textarea(attrs={
+            #     'class': 'form-control',
+            #     'placeholder': 'Entrez une description détaillée du projet',
+            #     'rows': 5
+            # }),
             'image': forms.ClearableFileInput(attrs={
                 'class': 'form-control',
             }),
