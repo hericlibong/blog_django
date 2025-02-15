@@ -225,5 +225,37 @@ footer {
     padding: 10px 20px;
 }
 
+/* Formulaire : Espacement et Alignement */
+.needs-validation {
+    max-width: 100%;
+}
 
+.card {
+    border-radius: 8px;
+}
+
+.card-header {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.form-label {
+    font-size: 1rem;
+    color: #333;
+}
+
+.form-control {
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+}
+
+.alert-danger {
+    font-size: 0.9rem;
+    padding: 5px;
+}
+
+.btn {
+    padding: 10px 20px;
+}
 

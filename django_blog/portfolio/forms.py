@@ -1,11 +1,13 @@
 from django import forms
 from .models import Project
+from ckeditor.widgets import CKEditorWidget
 
 
 class ProjectForm(forms.ModelForm):
     """
     Formulaire pour gérer les champs liés au modèle Project.
     """
+    description = forms.CharField(widget=CKEditorWidget())
 
     class Meta:
         model = Project

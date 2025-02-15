@@ -59,6 +59,7 @@ class ProjectListView(ListView):
     model = Project
     template_name = 'portfolio/project_list.html'
     context_object_name = 'projects'
+    ordering = ['-created_at']
 
 
 class ProjectDetailView(DetailView):

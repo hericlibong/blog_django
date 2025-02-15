@@ -61,6 +61,9 @@ INSTALLED_APPS = [
     'accounts',
     'portfolio',
 
+    # Applications tierces
+    'ckeditor',
+
    
     
    
@@ -192,6 +195,25 @@ DEFAULT_FILE_STORAGE ='cloudinary_storage.storage.MediaCloudinaryStorage'
 # Configuration spécifique pour Render
 if os.getenv('RENDER'):
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Configuration de CKEditor
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'],
+            ['NumberedList', 'BulletedList', 'Blockquote'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['Image', 'Table', 'HorizontalRule'],
+            ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord'],
+            ['Undo', 'Redo'],
+            ['Source'],
+            ['Maximize'],
+        ],
+        'width': '100%',
+    }
+}
 
 AUTH_USER_MODEL = 'accounts.UserAccount'
 

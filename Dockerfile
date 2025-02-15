@@ -24,13 +24,6 @@ WORKDIR /app/django_blog
 # 6) On expose le port
 EXPOSE 8000
 
-# 7) Commande de démarrage par défaut
-# CMD ["sh", "-c", "../wait-for-postgres.sh db python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
-# Remplacez le CMD actuel par :
-# CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
-# CMD ["sh", "-c", "python manage.py migrate && python manage.py create_superuser && python manage.py runserver 0.0.0.0:8000"]
-# Collecte des fichiers statiques, migrations, création du superuser
-# puis démarrage du serveur via gunicorn
-# CMD ["sh", "-c", "python manage.py collectstatic --noinput && python manage.py migrate && python manage.py create_superuser && gunicorn django_blog.wsgi:application --bind 0.0.0.0:$PORT"]
+
 CMD ["sh", "-c", "python manage.py collectstatic --noinput && python manage.py migrate && python manage.py create_superuser && python manage.py runserver 0.0.0.0:8000"]
 
