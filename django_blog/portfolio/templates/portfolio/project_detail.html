@@ -8,11 +8,14 @@
         <div class="col-md-8 col-lg-7 project-detail-container">  
             <!-- ✅ Titre du projet -->
             <h1 class="text-center">{{ project.title }}</h1>
-            <p class="text-muted text-center">{{ project.description|truncatewords:20 }}</p>
+            
 
             <!-- ✅ Image principale -->
             <div class="project-image-container">
                 <img src="{{ project.image.url }}" class="img-fluid rounded" alt="{{ project.title }}">
+                <div>
+                    <p class="text-muted text-center">{{ project.resume|truncatewords:20 }}</p>
+                </div>
             </div>
 
             <!-- ✅ Auteur et actions (visible que par superuser) -->
@@ -34,6 +37,19 @@
                 <a href="{% url 'portfolio:project_list' %}" class="btn btn-secondary">← Retour à la liste des projets</a>
             </div>
         </div>
+
+        <!-- Sidebar -->
+        <div class="col-md-4">
+            <div class="position-sticky" style="top: 2rem;">
+                <div class="p-4 mb-3">
+                    <h4 class="fst-bold">Me</h4>
+                    {% include "portfolio/about.html" %}
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
+
+
 {% endblock %}

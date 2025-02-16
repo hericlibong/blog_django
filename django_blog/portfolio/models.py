@@ -10,6 +10,7 @@ User = get_user_model()
 class Project(models.Model):
     """Model definition for Project."""
     title = models.CharField(max_length=255, unique=True)
+    resume = models.CharField(max_length=350, help_text="Résumé du projet", blank=True, null=True)
     description = RichTextField(max_length=5000, help_text="Full text of the project")
     image = CloudinaryField("image", folder="project_images/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

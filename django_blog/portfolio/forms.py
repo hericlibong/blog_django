@@ -11,23 +11,24 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ['title', 'description', 'image']
+        fields = ['title', 'resume', 'description', 'image']
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Entrez le titre du projet'
             }),
-            # 'description': forms.Textarea(attrs={
-            #     'class': 'form-control',
-            #     'placeholder': 'Entrez une description détaillée du projet',
-            #     'rows': 5
-            # }),
+            'resume': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Entrez une description détaillée du projet',
+                'rows': 2,
+            }),
             'image': forms.ClearableFileInput(attrs={
                 'class': 'form-control',
             }),
         }
         labels = {
             'title': 'Titre du projet',
+            'resume': 'Résumé',
             'description': 'Description',
             'image': 'Image de garde',
         }
