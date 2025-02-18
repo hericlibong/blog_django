@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Assistant IA{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Assistant IA</h2>
+    <div class="chat-container">
+        <div id="chat-box" class="chat-box"></div>
+        <div class="input-group mt-3">
+            <input type="text" id="user-input" class="form-control" placeholder="Posez une question...">
+            <button class="btn btn-primary" onclick="sendMessage()">Envoyer</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function sendMessage() {
+    let userMessage = document.getElementById("user-input").value;
+    if (!userMessage.trim()) return;
+
+    let chatBox = document.getElementById("chat-box");
+    chatBox.innerHTML += `<div class="user-message"><strong>Vous :</strong> ${userMessage}</div>`;
+
+    fetch("{% url 'openaichat:chatbot_response' %}", {
+        method: "POST",
+        headers: { "X-CSRFToken": "{{ csrf_token }}", "Content-Type": "application/x-www-form-urlencoded" },
+        body: `message=${userMessage}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.response) {
+            chatBox.innerHTML += `<div class="bot-message"><strong>IA :</strong> ${data.response}</div>`;
+        } else {
+            chatBox.innerHTML += `<div class="error-message">Erreur : ${data.error}</div>`;
+        }
+    });
+
+    document.getElementById("user-input").value = "";
+}
+</script>
+
+{% endblock %}

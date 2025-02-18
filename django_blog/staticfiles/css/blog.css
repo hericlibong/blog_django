@@ -259,3 +259,24 @@ footer {
     padding: 10px 20px;
 }
 
+/* chatbot section */
+
+.chat-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #f9f9f9;
+}
+.chat-box {
+    height: 300px;
+    overflow-y: auto;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+.user-message { text-align: right; margin: 10px; }
+.bot-message { text-align: left; margin: 10px; }
+.error-message { color: red; text-align: center; }
+
+
