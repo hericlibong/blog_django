@@ -26,6 +26,7 @@ urlpatterns = [
     path('portfolio/', include('portfolio.urls', namespace='portfolio')),
     path('', RedirectView.as_view(url='portfolio/projects/', permanent=True)),
     path('openaichat/', include('openaichat.urls', namespace='openaichat')),
+    path('accounts/', include('accounts.urls', namespace='accounts')),
    
 ]
 # Ajouter la gestion des médias en mode développement

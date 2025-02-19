@@ -42,8 +42,8 @@
         <div class="col-md-4">
             <div class="position-sticky" style="top: 2rem;">
                 <div class="p-4 mb-3">
-                    <h4 class="fst-bold">Me</h4>
-                    {% include "portfolio/about.html" %}
+                    <h4 class="fst-bold">{{ profile.user.username|capfirst }}</h4>
+                    {% include "accounts/profile.html" %}
                 </div>
             </div>
         </div>

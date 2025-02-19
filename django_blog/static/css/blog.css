@@ -259,3 +259,18 @@ footer {
     padding: 10px 20px;
 }
 
+.profile-card {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: left;
+}
+
+.profile-avatar {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+

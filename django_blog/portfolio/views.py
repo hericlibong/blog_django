@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Project
 from .forms import ProjectForm
+from accounts.models import UserProfile
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
@@ -60,12 +61,26 @@ class ProjectListView(ListView):
     template_name = 'portfolio/project_list.html'
     context_object_name = 'projects'
     ordering = ['-created_at']
+    paginate_by = 5
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["profile"] = UserProfile.objects.first()
+        return context
+        
+      
 
 class ProjectDetailView(DetailView):
     model = Project
     template_name = 'portfolio/project_detail.html'
     context_object_name = 'project'
+
+    def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+
+            context["profile"] = UserProfile.objects.first()
+            return context
 
 
 class AboutView(TemplateView):
