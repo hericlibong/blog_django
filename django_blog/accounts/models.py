@@ -32,4 +32,3 @@ class UserProfile(models.Model):
     def get_skills_list(self):
         """Retourne une liste de compétences à partir de la chaîne de caractères, séparées par des virgules."""
         return [skill.strip() for skill in self.skills.split(",") if skill.strip()]
-    

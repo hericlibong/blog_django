@@ -1,31 +1,13 @@
 import openai
-import requests
-from accounts.models import UserAccount, UserProfile
+from accounts.models import UserProfile
 from portfolio.models import Project
 from django.shortcuts import render
 from django.http import JsonResponse
 from decouple import config
-import os
-import json
-
 
 
 # Récupérer explicitement la clé API
 OPENAI_API_KEY = config('OPENAI_API_KEY', default=None)
-
-# Chemin vers le fichier json contenant les réponses du chatbot
-RESPONSES_FILE = os.path.join(os.path.dirname(__file__), 'responses.json')
-
-
-# Fonction pour charger les réponses du chatbot à partir du fichier json
-def load_responses():
-    try:
-        with open(RESPONSES_FILE, 'r', encoding='utf-8') as file:
-            return json.load(file)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return {}
-
-PREDIFINED_RESPONSES = load_responses()    
 
 def get_portfolio_context():
     """ Fonction pour récupérer le contexte du portfolio """
@@ -93,4 +75,3 @@ def chatbot_response(request):
         except openai.OpenAIError as e:
             return JsonResponse({'error': str(e)}, status=500)
     return JsonResponse({'error': 'Méthode non autorisée.'}, status=405)
-
