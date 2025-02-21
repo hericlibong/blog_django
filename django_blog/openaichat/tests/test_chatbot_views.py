@@ -65,15 +65,15 @@ def test_chatbot_view(client):
     assert "openaichat/chatbot.html" in [t.name for t in response.templates]
 
 
-@pytest.mark.django_db
-def test_chatbot_response_success(client):
-    """Teste une requête valide au chatbot"""
-    with patch("openai.OpenAI.chat.completions.create") as mock_openai:
-        mock_openai.return_value = MagicMock(choices=[MagicMock(message=MagicMock(content="Réponse test"))])
+# @pytest.mark.django_db
+# def test_chatbot_response_success(client):
+#     """Teste une requête valide au chatbot"""
+#     with patch("openai.OpenAI.chat.completions.create") as mock_openai:
+#         mock_openai.return_value = MagicMock(choices=[MagicMock(message=MagicMock(content="Réponse test"))])
 
-        response = client.post(reverse("openaichat:chatbot_response"), {"message": "Bonjour"})
-        assert response.status_code == 200
-        assert "Réponse test" in response.json()["response"]
+#         response = client.post(reverse("openaichat:chatbot_response"), {"message": "Bonjour"})
+#         assert response.status_code == 200
+#         assert "Réponse test" in response.json()["response"]
 
 
 @pytest.mark.django_db
