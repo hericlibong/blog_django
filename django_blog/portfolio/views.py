@@ -68,8 +68,7 @@ class ProjectListView(ListView):
 
         context["profile"] = UserProfile.objects.first()
         return context
-        
-      
+
 
 class ProjectDetailView(DetailView):
     model = Project
@@ -77,10 +76,9 @@ class ProjectDetailView(DetailView):
     context_object_name = 'project'
 
     def get_context_data(self, **kwargs):
-            context = super().get_context_data(**kwargs)
-
-            context["profile"] = UserProfile.objects.first()
-            return context
+        context = super().get_context_data(**kwargs)
+        context["profile"] = UserProfile.objects.first()
+        return context
 
 
 class AboutView(TemplateView):

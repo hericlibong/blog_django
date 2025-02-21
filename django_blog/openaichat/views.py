@@ -9,6 +9,7 @@ from decouple import config
 # Récupérer explicitement la clé API
 OPENAI_API_KEY = config('OPENAI_API_KEY', default=None)
 
+
 def get_portfolio_context():
     """ Fonction pour récupérer le contexte du portfolio """
     projects = Project.objects.all()
@@ -17,6 +18,7 @@ def get_portfolio_context():
 
     project_summaries = "\n".join([f"{p.title}: {p.description[:100]}..." for p in projects])
     return f"Voici une liste des projets de HericLdev :\n{project_summaries}\n"
+
 
 def get_user_profile():
     """ Récupère les informations du profil utilisateur pour le chatbot """
@@ -33,15 +35,17 @@ def get_user_profile():
     LinkedIn : {profile.linkedin}
     """
 
+
 def chatbot_view(request):
     """ Vue pour le chatbot """
     return render(request, 'openaichat/chatbot.html')
+
 
 def chatbot_response(request):
     """ Vue pour la réponse du chatbot avec un contexte dynamique enrichi """
     if request.method == 'POST':
         user_message = request.POST.get("message", "").lower().strip()
-        
+
         if not user_message:
             return JsonResponse({'error': 'Aucun message reçu.'}, status=400)
 
@@ -53,7 +57,7 @@ def chatbot_response(request):
 
         Et voici ses projets :
         {get_portfolio_context()}
-        
+
         Réponds de manière claire et informative en fonction de ces informations.
         """
 
