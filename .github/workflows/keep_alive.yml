@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Keep Render App Alive
+
+on:
+  schedule:
+    - cron: '*/15 * * * *' # Execute every 10 minutes
+
+jobs:
+  ping_render:
+    runs-on: unbuntu-latest
+    steps:
+      - name: Ping Render App
+        run: curl -s -o /dev/null -w "%{http_code}" https://hericldev.onrender.com
