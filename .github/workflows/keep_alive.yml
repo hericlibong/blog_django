@@ -3,11 +3,11 @@ name: Keep Render App Alive
 
 on:
   schedule:
-    - cron: '*/15 * * * *' # Execute every 10 minutes
+    - cron: '*/10 * * * *' # Exécute toutes les 10 minutes
 
 jobs:
   ping_render:
-    runs-on: unbuntu-latest
+    runs-on: ubuntu-latest  # Correction du nom
     steps:
       - name: Ping Render App
-        run: curl -s -o /dev/null -w "%{http_code}" https://hericldev.onrender.com
+        run: curl -s -o /dev/null -w "%{http_code}" https://hericldev.onrender.com && echo "Ping réussi"
