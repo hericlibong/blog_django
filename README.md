@@ -1,6 +1,5 @@
 # My Django Blog
 
-# **📌 Structure de la Documentation README**
 1. **Présentation du projet**
    - Description du portfolio
    - Technologies utilisées
