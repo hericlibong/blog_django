@@ -3,15 +3,18 @@
 {% block title %}Assistant IA{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2>Assistant IA</h2>
-    <p>Discutez avec l'Assistant IA pour en savoir plus sur moi 😉. Mon parcours, mes expériences, ma reconversion. N'hésitez pas, il sait tout de moi...Ou presque 😄</p>
-    <div class="chat-container">
-        <div id="chat-box" class="chat-box"></div>
-        <div class="input-group mt-3">
-            <input type="text" id="user-input" class="form-control" placeholder="Posez une question...">
-            <button class="btn btn-primary" onclick="sendMessage()">Envoyer</button>
-        </div>
+<div class="container chat-container mt-5">
+    <h2 class="text-center">Assistant IA</h2>
+    <p class="text-center description">
+        Discutez avec l'Assistant IA pour en savoir plus sur moi. Mon parcours, mes expériences, ma reconversion.
+        Il sait tout de moi... Ou presque 😉.
+    </p>
+
+    <div class="chat-box" id="chat-box"></div>
+
+    <div class="input-group mt-3 chat-input">
+        <input type="text" id="user-input" class="form-control" placeholder="Posez une question sur Héric..." autofocus>
+        <button class="btn btn-primary" onclick="sendMessage()">Envoyer</button>
     </div>
 </div>
 

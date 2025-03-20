@@ -72,7 +72,10 @@ def chatbot_response(request):
                     {"role": "system", "content": CONTEXT},
                     {"role": "user", "content": user_message}
                 ],
-                max_tokens=150
+                max_tokens=350,
+                stop = ["\n\n", "."], # Ajout de séquence d'arrêt pour une réponse plus propre
+                temperature=0.7, # Contrôle la créativité de la réponse
+                logprobs=True, # Retourne les probabilités de log pour chaque jeton
             )
             bot_reply = response.choices[0].message.content
             return JsonResponse({'response': bot_reply}, status=200)
