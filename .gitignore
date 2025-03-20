@@ -3,4 +3,5 @@
 django_blog/db.sqlite3
 .env
 *.pyc
+staticfiles/
 
