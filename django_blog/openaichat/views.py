@@ -72,7 +72,7 @@ def chatbot_response(request):
                     {"role": "system", "content": CONTEXT},
                     {"role": "user", "content": user_message}
                 ],
-                max_tokens=500
+                max_tokens=500,
                 stop=["\n\n", "."],  # Ajout de séquence d'arrêt pour une réponse plus propre
             )
             bot_reply = response.choices[0].message.content
