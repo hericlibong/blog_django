@@ -275,4 +275,69 @@ footer {
     border-radius: 50% !important;
 }
 
+/* ✅ Style du chatbot */
+
+/* Conteneur général du chat */
+.chat-container {
+    max-width: 600px;  /* Réduit la largeur de la zone de chat */
+    margin: 30px auto;  /* Centre la boîte */
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre et description */
+.chat-container h2 {
+    text-align: center;
+    color: #333;
+}
+
+.chat-container .description {
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+}
+
+/* Zone de chat */
+.chat-box {
+    height: 400px;
+    overflow-y: auto;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Messages utilisateur */
+.user-message {
+    background: #007bff;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 15px;
+    margin: 5px 0;
+    text-align: right;
+    max-width: 75%;
+    align-self: flex-end;
+}
+
+/* Messages du bot */
+.bot-message {
+    background: #e9ecef;
+    color: #333;
+    padding: 8px 12px;
+    border-radius: 15px;
+    margin: 5px 0;
+    max-width: 75%;
+    align-self: flex-start;
+}
+
+/* Barre d'entrée utilisateur */
+.chat-input {
+    display: flex;
+    gap: 10px;
+}
 
