@@ -1,0 +1,9 @@
+{
+    "python.analysis.extraPaths": [
+      "./"
+    ],
+    "python.defaultInterpreterPath": "python3",
+    "python.analysis.autoSearchPaths": true,
+    "python.analysis.useLibraryCodeForTypes": true
+  }
+  

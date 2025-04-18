@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     # Applications tierces
     'ckeditor',
     'openaichat',
+    'blog',
 
    
     
