@@ -1,6 +1,6 @@
 import pytest
 from portfolio.forms import ProjectForm
-from ckeditor.widgets import CKEditorWidget
+from django_ckeditor_5.widgets import CKEditor5Widget
 
 
 @pytest.mark.django_db
@@ -41,7 +41,7 @@ class TestProjectForm:
         """Test that widgets are properly configured."""
         form = ProjectForm()
         assert form.fields['title'].widget.attrs['class'] == 'form-control'
-        assert isinstance(form.fields['description'].widget, CKEditorWidget)
+        assert isinstance(form.fields['description'].widget, CKEditor5Widget)
 
     def test_clean_title_method(self):
         """Test the clean_title method."""
