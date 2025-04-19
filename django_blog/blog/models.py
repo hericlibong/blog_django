@@ -1,6 +1,6 @@
 from django.db import models
 from cloudinary.models import CloudinaryField
-from ckeditor.fields import RichTextField
+from django_ckeditor_5.fields import CKEditor5Field
 from accounts.models import UserAccount
 
 
@@ -28,7 +28,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     subtitle = models.CharField(max_length=300, blank=True, null=True)
     image = CloudinaryField("image", folder="blog_images/")
-    content = RichTextField()
+    content = CKEditor5Field("content", config_name="default")
     author = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
     category = models.ManyToManyField(Category, related_name="posts")
     tags = models.ManyToManyField(Tag, blank=True, related_name="posts")

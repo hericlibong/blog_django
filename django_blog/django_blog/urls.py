@@ -27,8 +27,9 @@ urlpatterns = [
     path('', RedirectView.as_view(url='portfolio/projects/', permanent=True)),
     path('openaichat/', include('openaichat.urls', namespace='openaichat')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
-   
+    path('ckeditor5/', include('django_ckeditor_5.urls')),
 ]
+   
 # Ajouter la gestion des médias en mode développement
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

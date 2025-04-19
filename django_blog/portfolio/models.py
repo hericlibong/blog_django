@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from cloudinary.models import CloudinaryField
-from ckeditor.fields import RichTextField
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 User = get_user_model()
@@ -11,7 +11,7 @@ class Project(models.Model):
     """Model definition for Project."""
     title = models.CharField(max_length=255, unique=True)
     resume = models.CharField(max_length=350, help_text="Résumé du projet", blank=True, null=True)
-    description = RichTextField(max_length=5000, help_text="Full text of the project")
+    description = CKEditor5Field("description", config_name="default")
     image = CloudinaryField("image", folder="project_images/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

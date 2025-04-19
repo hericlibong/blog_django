@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     'portfolio',
 
     # Applications tierces
-    'ckeditor',
+    'django_ckeditor_5',
     'openaichat',
     'blog',
 
@@ -198,24 +198,8 @@ DEFAULT_FILE_STORAGE ='cloudinary_storage.storage.MediaCloudinaryStorage'
 if os.getenv('RENDER'):
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Configuration de CKEditor
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'Custom',
-        'toolbar_Custom': [
-            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'],
-            ['NumberedList', 'BulletedList', 'Blockquote'],
-            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-            ['Link', 'Unlink', 'Anchor'],
-            ['Image', 'Table', 'HorizontalRule'],
-            ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord'],
-            ['Undo', 'Redo'],
-            ['Source'],
-            ['Maximize'],
-        ],
-        'width': '100%',
-    }
-}
+
+
 
 AUTH_USER_MODEL = 'accounts.UserAccount'
 
@@ -228,3 +212,43 @@ if os.getenv('RENDER'):
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
+
+
+# CKEditor 5 – Configuration enrichie
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': [
+            'heading', '|',
+            'bold', 'italic', 'underline', 'strikethrough', '|',
+            'link', 'blockQuote', '|',
+            'code', 'codeBlock', '|',  # ✅ Blocs de code
+            'bulletedList', 'numberedList', '|',
+            'insertTable', '|',
+            'imageUpload', 'mediaEmbed', '|',
+            'undo', 'redo'
+        ],
+        'language': 'fr',
+        'image': {
+            'toolbar': ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side'],
+        },
+        'table': {
+            'contentToolbar': ['tableColumn', 'tableRow', 'mergeTableCells'],
+        },
+        # Ajoute d'autres options ici si besoin
+    }
+}
+
+# CKEditor 5 – Stockage Cloudinary pour les uploads
+CKEDITOR_5_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# Droits d’upload via CKEditor
+CKEDITOR_5_FILE_UPLOAD_PERMISSION = 'staff'  # ou 'authenticated'
+
+# Configuration complète Cloudinary (utilisée aussi par django-cloudinary-storage)
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': config('CLOUDINARY_API_KEY'),
+    'API_SECRET': config('CLOUDINARY_API_SECRET'),
+}
+
+
