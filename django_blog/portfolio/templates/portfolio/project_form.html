@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{% block extrahead %}
+  {{ form.media }}
+{% endblock %}
+
 
 {% block title %}{{ form.instance.pk|yesno:"Modifier un projet,Créer un projet" }}{% endblock %}
 
@@ -40,9 +44,7 @@
     </div>
 </div>
 
-<script>
-    CKEDITOR.replace('id_description');
-</script>
+
 
 
 {% endblock %}
