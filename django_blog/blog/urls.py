@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import(
-    PostCreateView, PostCreateSuccessView, 
+from .views import (
+    PostCreateView, PostCreateSuccessView,
     PostListView, PostUpdateView, PostDetailView,
     PostDeleteView
-    )
+)
 app_name = 'blog'
 
 urlpatterns = [

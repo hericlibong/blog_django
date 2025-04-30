@@ -7,6 +7,7 @@ from .models import Post, Category
 from accounts.models import UserProfile
 from .forms import PostForm
 
+
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'blog/post_confirm_delete.html'
@@ -17,6 +18,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         if self.request.user == obj.author or self.request.user.is_superuser:
             return obj
         raise Http404("Vous n'avez pas la permission de supprimer cet article.")
+
 
 class PostDetailView(DetailView):
     model = Post
@@ -52,11 +54,18 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
         if self.request.user == obj.author or self.request.user.is_superuser:
             return obj
         raise Http404("Vous n'avez pas la permission de modifier cet article.")
-    
+
     def get_success_url(self):
         return reverse_lazy('blog:post_create_success') + f'?action=update&id={self.object.id}'
 
-    
+    def form_valid(self, form):
+        action = self.request.POST.get("action")
+        if action == "publish":
+            form.instance.is_published = True
+        else:
+            form.instance.is_published = False
+        return super().form_valid(form)
+
 
 class PostListView(ListView):
     model = Post
@@ -93,11 +102,11 @@ class PostListView(ListView):
             queryset = queryset.filter(is_published=True)
 
         return queryset.order_by('-created_at')
-    
+
     # 👇 Ici, tu ajoutes le contexte "profile"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all() # Récupérer toutes les catégories
+        context['categories'] = Category.objects.all()  # Récupérer toutes les catégories
 
         # Afficher le profil de l'administrateur
         context['profile'] = UserProfile.objects.first()
@@ -108,7 +117,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
     template_name = 'blog/post_form.html'
-    success_url = reverse_lazy('blog:post_create_success') 
+    success_url = reverse_lazy('blog:post_create_success')
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -120,7 +129,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
             form.instance.is_published = False
 
         return super().form_valid(form)
-    
+
     def get_success_url(self):
         return reverse_lazy('blog:post_create_success') + f'?action=create&id={self.object.id}'
 
@@ -139,7 +148,3 @@ class PostCreateSuccessView(TemplateView):
             context['post_published'] = False
             context['action'] = 'create'
         return context
-
-
-    
-   
