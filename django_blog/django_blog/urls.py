@@ -23,6 +23,7 @@ from django.views.generic import RedirectView
 # URLs de base
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('blog/', include('blog.urls', namespace='blog')), 
     path('portfolio/', include('portfolio.urls', namespace='portfolio')),
     path('', RedirectView.as_view(url='portfolio/projects/', permanent=True)),
     path('openaichat/', include('openaichat.urls', namespace='openaichat')),

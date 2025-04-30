@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.coverage.run]
 branch = true
-source = ["portfolio", "accounts"]
+source = ["portfolio", "accounts", "blog"]
 omit = ["*/migrations/*", "*/__init__.py", "*/tests/*"]
 
 [tool.coverage.report]
@@ -20,7 +20,7 @@ omit = [
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "django_blog.settings"
 python_files = ["test_*.py", "*_test.py", "*_tests.py"]
-testpaths = ["accounts/tests/*", "portfolio/tests/*", "openaichat/tests/*"]
+testpaths = ["accounts/tests/*", "portfolio/tests/*", "openaichat/tests/*", "blog/tests/*"]
 addopts = ["--cov", "--cov-report=term-missing"]
 
 

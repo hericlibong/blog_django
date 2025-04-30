@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Article publié{% endblock %}
+
+{% block content %}
+<div class="container mt-4 text-center">
+    <div class="alert alert-success shadow-sm">
+        {% if action == 'update' %}
+            {% if post_published %}
+                <h4 class="mb-3">✅ Article modifié et publié avec succès.</h4>
+            {% else %}
+                <h4 class="mb-3">✏️ Brouillon mis à jour</h4>
+                <p>Vous pouvez encore le modifier ou le publier plus tard.</p>
+            {% endif %}
+        {% else %}
+            {% if post_published %}
+                <h4 class="mb-3">🎉 Article créé et publié avec succès !</h4>
+            {% else %}
+                <h4 class="mb-3">📝 Brouillon enregistré</h4>
+                <p>Vous pouvez le modifier et le publier plus tard.</p>
+            {% endif %}
+        {% endif %}
+
+        <!-- On pourra ajouter un bouton retour ici plus tard -->
+        <a href="{% url 'blog:post_list' %}" class="btn btn-outline-primary mt-3">
+            Retour à la liste des articles
+        </a>
+    </div>
+</div>
+{% endblock %}

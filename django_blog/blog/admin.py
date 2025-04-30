@@ -25,5 +25,4 @@ class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
     date_hierarchy = "created_at"
     filter_horizontal = ("category", "tags")
-    raw_id_fields = ("author",)
     ordering = ("-created_at",)
