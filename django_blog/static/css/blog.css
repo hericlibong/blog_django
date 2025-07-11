@@ -341,3 +341,25 @@ footer {
     gap: 10px;
 }
 
+/* Ajoute ceci à static/css/blog.css */
+pre, code {
+    background-color: #f6f8fa;
+    color: #24292f;
+    border-radius: 6px;
+    padding: 12px;
+    display: block;
+    font-size: 1em;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+    font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Monaco', 'Courier New', monospace;
+}
+code {
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: #eee;
+    font-size: 1em;
+    font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Monaco', 'Courier New', monospace;
+    overflow-x: auto;
+}
+
+
