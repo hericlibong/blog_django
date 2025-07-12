@@ -354,12 +354,47 @@ pre, code {
     font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Monaco', 'Courier New', monospace;
 }
 code {
+    background: #f4f4f4;
+    color: #222;
     padding: 2px 6px;
     border-radius: 4px;
-    background: #eee;
-    font-size: 1em;
+    font-size: 0.96em;
     font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Monaco', 'Courier New', monospace;
+    /* PAS de display block ! */
+}
+
+/* Bloquer le display:block seulement si code dans un bloc <pre> */
+pre code {
+    display: block;
+    background: #2d2d2d;
+    color: #f8f8f2;
+    padding: 16px;
+    font-size: 1em;
     overflow-x: auto;
 }
+
+/* Optionnel : réduit la marge autour du bloc */
+pre {
+    margin: 1.2em 0;
+    border-radius: 8px;
+}
+
+/* Bonus : évite les marges sur le inline code */
+p code {
+    margin: 0;
+}
+
+/* Désactive toute propriété bloc pour le code inline */
+p code, span code, li code {
+    display: inline;
+    background: none;
+    color: #c41a16;     /* Rouge Django/Python */
+    font-size: 0.96em;
+    font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Monaco', 'Courier New', monospace;
+    padding: 0 2px;
+    border-radius: 2px;
+    border: none;
+}
+
 
 
