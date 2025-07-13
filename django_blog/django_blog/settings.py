@@ -242,7 +242,7 @@ CKEDITOR_5_CONFIGS = {
 CKEDITOR_5_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Droits d’upload via CKEditor
-CKEDITOR_5_FILE_UPLOAD_PERMISSION = 'staff'  # ou 'authenticated'
+CKEDITOR_5_FILE_UPLOAD_PERMISSION = 'authenticated'  # ou 'authenticated'
 
 # Configuration complète Cloudinary (utilisée aussi par django-cloudinary-storage)
 CLOUDINARY_STORAGE = {

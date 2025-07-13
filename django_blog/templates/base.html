@@ -97,6 +97,45 @@
         <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-docker.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-<LANG>.min.js"></script>
 
+            <script>
+                // Fonction pour récupérer le token CSRF dans les cookies
+                function getCookie(name) {
+                    let cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        const cookies = document.cookie.split(';');
+                        for (let i = 0; i < cookies.length; i++) {
+                            const cookie = cookies[i].trim();
+                            // Est-ce que ça commence par le bon nom ?
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+            
+                // Pour tous les uploads d’images CKEditor5, ajoute automatiquement le token CSRF
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Repère les requêtes de CKEditor5 qui n'ont pas le token CSRF
+                    if (window.CKEDITOR && window.CKEDITOR._.editorConfig) {
+                        // Patch global (si tu utilises une intégration JS custom)
+                    }
+            
+                    // Pour tous les fetch/ajax (si CKEditor5 envoie par fetch)
+                    const originalFetch = window.fetch;
+                    window.fetch = function(input, init) {
+                        if (typeof input === 'string' && input.includes('image_upload')) {
+                            init = init || {};
+                            init.headers = init.headers || {};
+                            init.headers['X-CSRFToken'] = getCookie('csrftoken');
+                        }
+                        return originalFetch(input, init);
+                    };
+                });
+            </script>
+            
+
 
         
    
