@@ -1,6 +1,7 @@
 import openai
 from accounts.models import UserProfile
 from portfolio.models import Project
+from blog.models import Post
 from django.shortcuts import render
 from django.http import JsonResponse
 from decouple import config
@@ -8,6 +9,23 @@ from decouple import config
 
 # Récupérer explicitement la clé API
 OPENAI_API_KEY = config('OPENAI_API_KEY', default=None)
+
+def get_blog_context():
+    """ Récupère les articles publiés pour le contexte chatbot """
+    posts = Post.objects.filter(is_published=True).order_by('-created_at')
+    if not posts:
+        return "Il n'y a pas encore d'articles publiés sur le blog."
+    # On limite à 3-5 derniers articles pour éviter de dépasser la limite de tokens
+    summary = []
+    for post in posts[:5]:
+        snippet = post.subtitle or post.content[:120]
+        summary.append(f"- {post.title}: {snippet}…")
+    return (
+        "Voici les derniers articles publiés sur le blog :\n"
+        + "\n".join(summary)
+        + "\n"
+    )
+
 
 
 def get_portfolio_context():
@@ -57,6 +75,9 @@ def chatbot_response(request):
 
         Et voici ses projets :
         {get_portfolio_context()}
+
+        Voici les derniers articles de blog :
+        {get_blog_context()}
 
         Réponds de manière claire et informative en fonction de ces informations.
         """

@@ -4,29 +4,18 @@
   {{ form.media }}
 
   <script>
-    function getCookie(name) {
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i].trim();
-          if (cookie.substring(0, name.length + 1) === (name + '=')) {
-            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            break;
-          }
-        }
-      }
-      return cookieValue;
-    }
+    // Dès que CKEditor est chargé, forçons le header CSRF sur tous les uploads
+    document.addEventListener('ckeditor5:init', function (e) {
+      const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
 
-    document.addEventListener('DOMContentLoaded', function() {
-      const csrftoken = getCookie('csrftoken');
-      window.CKEDITOR_5_CONFIG = window.CKEDITOR_5_CONFIG || {};
-      window.CKEDITOR_5_CONFIG.simpleUpload = {
-        headers: {
-          'X-CSRFToken': csrftoken
-        }
-      };
+      // Parcourt TOUS les éditeurs instanciés par le widget
+      window.CKEditor5Instances?.forEach(ed => {
+        ed.plugins.get('FileRepository').createUploadAdapter = loader => {
+          const adapter = new window.CKEditor5UploadAdapter(loader);
+          adapter.headers = { 'X-CSRFToken': csrfToken };   // 👈 voilà la ligne clé
+          return adapter;
+        };
+      });
     });
   </script>
 {% endblock %}
