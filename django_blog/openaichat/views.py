@@ -19,7 +19,7 @@ def get_blog_context():
     for post in posts[:5]:
         snippet = post.subtitle or post.content[:100]
         summary.append(f"- **{post.title}** : {snippet}")
-    return f"**Derniers articles publiés sur le blog :**\n" + "\n".join(summary) + "\n"
+    return "**Derniers articles publiés sur le blog :**\n" + "\n".join(summary) + "\n"
 
 
 def get_portfolio_context():
@@ -63,7 +63,7 @@ def chatbot_response(request):
         # Contexte mis à jour avec le profil et les projets
         CONTEXT = f"""
         Tu es un assistant personnel pour le portfolio de HericLdev.
-        Présente toujours les listes (projets, articles, compétences…) sous forme de puces ou de listes numérotées, 
+        Présente toujours les listes (projets, articles, compétences…) sous forme de puces ou de listes numérotées,
         avec les titres des éléments en gras (**titre**), et chaque élément sur une ligne séparée.
         Utilise du markdown si nécessaire pour la lisibilité.
 
@@ -76,11 +76,8 @@ def chatbot_response(request):
         **Articles de blog** :
         {get_blog_context()}
         """
-
-
         if not OPENAI_API_KEY:
             return JsonResponse({'error': 'Clé API OpenAI non trouvée. Vérifiez votre configuration.'}, status=500)
-
         try:
             client = openai.OpenAI(api_key=OPENAI_API_KEY)
             response = client.chat.completions.create(
