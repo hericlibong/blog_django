@@ -10,6 +10,7 @@ from decouple import config
 # Récupérer explicitement la clé API
 OPENAI_API_KEY = config('OPENAI_API_KEY', default=None)
 
+
 def get_blog_context():
     """ Récupère les articles publiés pour le contexte chatbot """
     posts = Post.objects.filter(is_published=True).order_by('-created_at')
@@ -25,7 +26,6 @@ def get_blog_context():
         + "\n".join(summary)
         + "\n"
     )
-
 
 
 def get_portfolio_context():
