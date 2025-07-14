@@ -18,6 +18,8 @@
     </div>
 </div>
 
+<!-- Charge la librairie Marked.js AVANT ton script JS -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
 function sendMessage() {
     let userMessage = document.getElementById("user-input").value;
@@ -29,29 +31,29 @@ function sendMessage() {
     fetch("{% url 'openaichat:chatbot_response' %}", {
         method: "POST",
         headers: { "X-CSRFToken": "{{ csrf_token }}", "Content-Type": "application/x-www-form-urlencoded" },
-        body: `message=${userMessage}`
+        body: `message=${encodeURIComponent(userMessage)}`
     })
     .then(response => response.json())
     .then(data => {
         if (data.response) {
-            chatBox.innerHTML += `<div class="bot-message"><strong>IA :</strong> ${data.response}</div>`;
+            const html = marked.parse(data.response);
+            chatBox.innerHTML += `<div class="bot-message"><strong>IA :</strong> ${html}</div>`;
         } else {
             chatBox.innerHTML += `<div class="error-message">Erreur : ${data.error}</div>`;
         }
+        chatBox.scrollTop = chatBox.scrollHeight; // Scroll automatique vers le bas
+    })
+    .catch(err => {
+        chatBox.innerHTML += `<div class="error-message">Erreur réseau ou serveur</div>`;
     });
 
     document.getElementById("user-input").value = "";
 }
+document.getElementById("user-input").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();  // Empêche le saut de ligne dans le champ input
+        sendMessage();
+    }
+});
 </script>
-
-<script>
-    document.getElementById("user-input").addEventListener("keypress", function(event) {
-        if (event.key === "Enter") {
-            event.preventDefault();  // Empêche le saut de ligne dans le champ input
-            sendMessage();
-        }
-    });
-    </script>
-    
-
 {% endblock %}

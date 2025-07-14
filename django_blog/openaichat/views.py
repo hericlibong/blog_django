@@ -12,20 +12,14 @@ OPENAI_API_KEY = config('OPENAI_API_KEY', default=None)
 
 
 def get_blog_context():
-    """ Récupère les articles publiés pour le contexte chatbot """
     posts = Post.objects.filter(is_published=True).order_by('-created_at')
     if not posts:
-        return "Il n'y a pas encore d'articles publiés sur le blog."
-    # On limite à 3-5 derniers articles pour éviter de dépasser la limite de tokens
+        return "Aucun article n'a encore été publié sur le blog.\n"
     summary = []
     for post in posts[:5]:
-        snippet = post.subtitle or post.content[:120]
-        summary.append(f"- {post.title}: {snippet}…")
-    return (
-        "Voici les derniers articles publiés sur le blog :\n"
-        + "\n".join(summary)
-        + "\n"
-    )
+        snippet = post.subtitle or post.content[:100]
+        summary.append(f"- **{post.title}** : {snippet}")
+    return f"**Derniers articles publiés sur le blog :**\n" + "\n".join(summary) + "\n"
 
 
 def get_portfolio_context():
@@ -34,24 +28,23 @@ def get_portfolio_context():
     if not projects:
         return "les portfolio ne contient pas de projet pour le moment"
 
-    project_summaries = "\n".join([f"{p.title}: {p.description[:100]}..." for p in projects])
-    return f"Voici une liste des projets de HericLdev :\n{project_summaries}\n"
+    project_summaries = "\n".join(
+        [f"- **{p.title}** : {p.description[:100]}..." for p in projects]
+    )
+    return f"**Liste des projets de HericLdev :**\n{project_summaries}\n"
 
 
 def get_user_profile():
-    """ Récupère les informations du profil utilisateur pour le chatbot """
-    profile = UserProfile.objects.first()  # Supposons qu'il n'y a qu'un seul profil
+    profile = UserProfile.objects.first()
     if not profile:
         return "Aucune information de profil disponible."
-
-    return f"""
-    Biographie : {profile.bio}
-    Compétences : {profile.skills}
-    short bio : {profile.short_bio}
-    Expérience : {profile.experience}
-    GitHub : {profile.github}
-    LinkedIn : {profile.linkedin}
-    """
+    return (
+        f"**Biographie** : {profile.bio}\n"
+        f"**Compétences** : {profile.skills}\n"
+        f"**Expérience** : {profile.experience}\n"
+        f"**GitHub** : {profile.github}\n"
+        f"**LinkedIn** : {profile.linkedin}\n"
+    )
 
 
 def chatbot_view(request):
@@ -70,17 +63,20 @@ def chatbot_response(request):
         # Contexte mis à jour avec le profil et les projets
         CONTEXT = f"""
         Tu es un assistant personnel pour le portfolio de HericLdev.
-        Voici des informations sur son profil :
+        Présente toujours les listes (projets, articles, compétences…) sous forme de puces ou de listes numérotées, 
+        avec les titres des éléments en gras (**titre**), et chaque élément sur une ligne séparée.
+        Utilise du markdown si nécessaire pour la lisibilité.
+
+        **Profil** :
         {get_user_profile()}
 
-        Et voici ses projets :
+        **Projets** :
         {get_portfolio_context()}
 
-        Voici les derniers articles de blog :
+        **Articles de blog** :
         {get_blog_context()}
-
-        Réponds de manière claire et informative en fonction de ces informations.
         """
+
 
         if not OPENAI_API_KEY:
             return JsonResponse({'error': 'Clé API OpenAI non trouvée. Vérifiez votre configuration.'}, status=500)
