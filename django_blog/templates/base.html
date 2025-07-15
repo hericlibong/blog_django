@@ -34,9 +34,9 @@
     <!-- ✅ Navbar bien alignée avec le contenu -->
     <nav class="container nav-scroller py-1 mb-3 border-bottom">
         <div class="d-flex flex-wrap">
-            <a class="p-2 link-secondary" href="{% url 'portfolio:project_list' %}">PortFolio</a>
-            <a class="p-2 link-secondary" href="{% url 'openaichat:chatbot' %}">Assistant IA</a>
+            <a class="p-2 link-secondary" href="{% url 'portfolio:project_list' %}">Projets</a>
             <a class="p-2 link-secondary" href="{% url 'blog:post_list' %}">Blog</a>
+            <a class="p-2 link-secondary" href="{% url 'openaichat:chatbot' %}">🤖 IA Assistant</a>
             {% if user.is_authenticated and user.is_superuser %}
             <div class="ms-auto d-flex gap-2">
                 <a class="btn btn-outline-dark" href="{% url 'portfolio:project_create' %}">Créer un projet</a>

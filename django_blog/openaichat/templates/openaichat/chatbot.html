@@ -37,7 +37,9 @@ function sendMessage() {
     .then(data => {
         if (data.response) {
             const html = marked.parse(data.response);
-            chatBox.innerHTML += `<div class="bot-message"><strong>IA :</strong> ${html}</div>`;
+            chatBox.innerHTML += `<div class="bot-message"><strong><span style="font-size:1.3em; margin-right:6px;">🤖</span></strong>${html}</div>`;
+
+
         } else {
             chatBox.innerHTML += `<div class="error-message">Erreur : ${data.error}</div>`;
         }
