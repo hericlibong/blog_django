@@ -148,3 +148,17 @@ class PostCreateSuccessView(TemplateView):
             context['post_published'] = False
             context['action'] = 'create'
         return context
+ 
+    
+# class BeautifulF1ListView(ListView):
+#     model = Post
+#     template_name = 'blog/beautifull_f1.html'
+#     context_object_name = 'posts'
+#     ordering = ['-created_at']
+#     paginate_by = 10
+
+#     def get_queryset(self):
+#         return Post.objects.filter(
+#             is_published=True,
+#             categories__name__iexact="Beautifull F1"
+#         )

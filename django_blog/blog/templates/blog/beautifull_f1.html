@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Beautifull F1{% endblock %}
+{% block content %}
+    <h2>Beautifull F1</h2>
+    {% if posts %}
+        {% for post in posts %}
+            <div class="blog-post">
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.subtitle }}</p>
+                <a href="{% url 'blog:post_detail' post.slug %}">Lire la suite</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Aucun article dans cette catégorie.</p>
+    {% endif %}
+{% endblock %}
