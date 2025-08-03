@@ -18,7 +18,7 @@ class TestPostDetailView:
             slug="article-publie",
             author=author,
             is_published=True,
-            content="contenu publié"
+            content="contenu publié",
         )
 
         draft = Post.objects.create(
@@ -26,7 +26,7 @@ class TestPostDetailView:
             slug="brouillon",
             author=author,
             is_published=False,
-            content="contenu caché"
+            content="contenu caché",
         )
 
         return author, stranger, published, draft

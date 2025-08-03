@@ -17,7 +17,7 @@ class TestPostDeleteView:
             slug="post-supprimer",
             author=author,
             content="Contenu test",
-            is_published=True
+            is_published=True,
         )
         return author, stranger, post
 

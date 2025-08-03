@@ -14,33 +14,34 @@ class TestProjectModel:
     @pytest.fixture
     def superuser(self):
         """Fixture to create a superuser."""
-        return User.objects.create_superuser(username='admin', password='admin')
+        return User.objects.create_superuser(username="admin", password="admin")
 
     @pytest.fixture
     def project(self, superuser):
         """Fixture to create a project."""
         return Project.objects.create(
-            title='Test project',
-            description='This is a test project',
-            created_by=superuser
+            title="Test project", description="This is a test project", created_by=superuser
         )
 
     def test_project_creation(self, project, superuser):
         """Test the creation of a project."""
-        assert project.title == 'Test project'
-        assert project.description == 'This is a test project'
+        assert project.title == "Test project"
+        assert project.description == "This is a test project"
         assert project.created_by == superuser
         assert project.created_at is not None
 
     def test_project_str(self, project):
         """Test the string representation of a project."""
-        assert str(project) == 'Test project'
+        assert str(project) == "Test project"
 
-    @pytest.mark.parametrize("title, valid", [
-        ("Valid title", True),
-        ("", False),  # Titre vide
-        ("A" * 256, False),  # Titre trop long
-    ])
+    @pytest.mark.parametrize(
+        "title, valid",
+        [
+            ("Valid title", True),
+            ("", False),  # Titre vide
+            ("A" * 256, False),  # Titre trop long
+        ],
+    )
     def test_project_title_validation(self, title, valid, superuser):
         """Test the validation of the project title."""
         project = Project(title=title, description="Test description", created_by=superuser)
@@ -60,15 +61,13 @@ class TestImageFolioModel:
     @pytest.fixture
     def superuser(self):
         """Fixture to create a superuser."""
-        return User.objects.create_superuser(username='admin', password='admin')
+        return User.objects.create_superuser(username="admin", password="admin")
 
     @pytest.fixture
     def project(self, superuser):
         """Fixture to create a project."""
         return Project.objects.create(
-            title='Test project',
-            description='This is a test project',
-            created_by=superuser
+            title="Test project", description="This is a test project", created_by=superuser
         )
 
     @pytest.fixture
@@ -76,15 +75,17 @@ class TestImageFolioModel:
         """Fixture to create an image."""
         imagefolio = ImageFolio.objects.create(
             project=project,
-            image='project_images/test.jpg',
-            alt_text='Test image',
+            image="project_images/test.jpg",
+            alt_text="Test image",
         )
         assert imagefolio.project == project
-        assert imagefolio.image == 'project_images/test.jpg'
-        assert imagefolio.alt_text == 'Test image'
+        assert imagefolio.image == "project_images/test.jpg"
+        assert imagefolio.alt_text == "Test image"
         assert imagefolio.created_at is not None
 
     def test_imagefolio_str(self, project):
         """Test the string representation of an imagefolio."""
-        imagefolio = ImageFolio(project=project, image='project_images/test.jpg', alt_text='Test image')
+        imagefolio = ImageFolio(
+            project=project, image="project_images/test.jpg", alt_text="Test image"
+        )
         assert str(imagefolio) == f"Image for project: {project.title}"

@@ -29,6 +29,7 @@ User = get_user_model()
 #     assert response.status_code == 200
 #     assert "Développeur Python" in response.content.decode()
 
+
 @pytest.mark.django_db
 def test_user_profile_view_no_profile(client):
     """Vérifie qu'une erreur 404 est retournée si aucun profil n'existe pour l'utilisateur."""

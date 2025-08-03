@@ -5,13 +5,17 @@ from django.db import models
 
 class UserAccount(AbstractUser):
     """Custom user model for accounts."""
+
     pass
 
 
 class UserProfile(models.Model):
     """Model definition for UserProfile."""
+
     user = models.OneToOneField(UserAccount, on_delete=models.CASCADE)
-    short_bio = models.CharField(max_length=400, blank=True, null=True, help_text="Your short bio for the template profile")
+    short_bio = models.CharField(
+        max_length=400, blank=True, null=True, help_text="Your short bio for the template profile"
+    )
     bio = models.TextField(blank=True, null=True, help_text="Your bio")
     experience = models.TextField(blank=True, help_text="Your professional experience")
     skills = models.TextField(blank=True, help_text="Your skills")

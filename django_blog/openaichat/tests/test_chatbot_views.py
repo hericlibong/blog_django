@@ -32,8 +32,12 @@ def test_get_portfolio_context_with_projects():
     user.save()  # Force l'enregistrement de l'utilisateur en base pour générer un ID
 
     # Associer les projets à cet utilisateur
-    Project.objects.create(title='Project 1', description='Description for project 1', created_by_id=user.id)
-    Project.objects.create(title='Project 2', description='Description for project 2', created_by_id=user.id)
+    Project.objects.create(
+        title="Project 1", description="Description for project 1", created_by_id=user.id
+    )
+    Project.objects.create(
+        title="Project 2", description="Description for project 2", created_by_id=user.id
+    )
 
     result = get_portfolio_context()
 
@@ -90,9 +94,11 @@ def test_chatbot_response_empty_message(client):
 @patch("openai.OpenAI")
 def test_chatbot_response_successul(mock_openai, client):
     mock_instance = mock_openai.return_value
-    mock_instance.chat.completions.create.return_value = MagicMock(choices=[MagicMock(message=MagicMock(content="Réponse test"))])
+    mock_instance.chat.completions.create.return_value = MagicMock(
+        choices=[MagicMock(message=MagicMock(content="Réponse test"))]
+    )
 
-    response = client.post(reverse('openaichat:chatbot_response'), {"message": "Bonjour"})
+    response = client.post(reverse("openaichat:chatbot_response"), {"message": "Bonjour"})
     assert response.status_code == 200
     assert response.json()["response"] == "Réponse test"
 
@@ -103,13 +109,13 @@ def test_chatbot_response_api_error(mock_openai, client):
     mock_instance = mock_openai.return_value
     mock_instance.chat.completions.create.side_effect = openai.OpenAIError("Erreur API")
 
-    response = client.post(reverse('openaichat:chatbot_response'), {"message": "Erreur test"})
+    response = client.post(reverse("openaichat:chatbot_response"), {"message": "Erreur test"})
     assert response.status_code == 500
     assert "Erreur API" in response.json()["error"]
 
 
 def test_chatbot_response_invalid_method(client):
     """Vérifie qu'une requête GET renvoie une erreur 405 (Méthode non autorisée)."""
-    response = client.get(reverse('openaichat:chatbot_response'))
+    response = client.get(reverse("openaichat:chatbot_response"))
     assert response.status_code == 405
     assert response.json()["error"] == "Méthode non autorisée."

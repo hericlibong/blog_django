@@ -6,10 +6,10 @@ from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 
-@pytest.fixture(scope='session', autouse=True)
+@pytest.fixture(scope="session", autouse=True)
 def set_up_media_root(tmp_path_factory):
     """Fixture to set up the media root."""
-    media_root = tmp_path_factory.mktemp('media')
+    media_root = tmp_path_factory.mktemp("media")
     settings.MEDIA_ROOT = str(media_root)
     yield
     # Clean up after the tests

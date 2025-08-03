@@ -17,20 +17,14 @@ class TestPostListView:
         tag = Tag.objects.create(name="dev")
 
         post1 = Post.objects.create(
-            title="Publié",
-            slug="publie",
-            author=user,
-            is_published=True,
-            content="ok")
+            title="Publié", slug="publie", author=user, is_published=True, content="ok"
+        )
         post1.category.add(cat)
         post1.tags.add(tag)
 
         post2 = Post.objects.create(
-            title="Brouillon",
-            slug="draft",
-            author=user,
-            is_published=False,
-            content="draft")
+            title="Brouillon", slug="draft", author=user, is_published=False, content="draft"
+        )
         post2.category.add(cat)
 
         return user, other, cat, tag, post1, post2

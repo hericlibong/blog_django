@@ -38,7 +38,7 @@ class TestPostUpdateView:
         image = SimpleUploadedFile(
             "test.jpg",
             b"\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\xff\x00\xff\xff\xff\x00\x00\x00\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b",
-            content_type="image/gif"
+            content_type="image/gif",
         )
 
         url = reverse("blog:post_update", kwargs={"slug": post.slug})
@@ -48,7 +48,7 @@ class TestPostUpdateView:
             "content": "Nouveau contenu",
             "image": image,
             "category": [cat.id for cat in post.category.all()],
-            "action": "draft"
+            "action": "draft",
         }
         response = client.post(url, data)
         assert response.status_code == 302
@@ -66,10 +66,11 @@ class TestPostUpdateView:
             "image": SimpleUploadedFile(
                 "test.jpg",
                 b"\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\xff\x00\xff\xff\xff\x00\x00\x00\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x4c\x01\x00\x3b",
-                content_type="image/gif"),
-            "category": [
-                cat.id for cat in post.category.all()],
-            "action": "publish"}
+                content_type="image/gif",
+            ),
+            "category": [cat.id for cat in post.category.all()],
+            "action": "publish",
+        }
         response = client.post(url, data)
         post.refresh_from_db()
         assert response.status_code == 302

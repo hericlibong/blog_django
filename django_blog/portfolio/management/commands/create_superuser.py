@@ -8,13 +8,11 @@ password = os.getenv("DJANGO_SUPERUSER_PASSWORD", "mot_de_passe")
 
 
 class Command(BaseCommand):
-    help = 'Create a superuser'
+    help = "Create a superuser"
 
     def handle(self, *args, **options):
-        if not User.objects.filter(username='admin').exists():
+        if not User.objects.filter(username="admin").exists():
             User.objects.create_superuser(
-                username='admin',
-                email='hericlibong@gmail.com',
-                password=password
+                username="admin", email="hericlibong@gmail.com", password=password
             )
-            self.stdout.write('Superuser created successfully')
+            self.stdout.write("Superuser created successfully")

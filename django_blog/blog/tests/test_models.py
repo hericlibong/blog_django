@@ -31,10 +31,8 @@ class TestPostModel:
         """Test the string representation of the Post model."""
         user = django_user_model.objects.create_user(username="testuser", password="pass")
         post = Post.objects.create(
-            title="Article test",
-            slug="article-test",
-            author=user,
-            content="du contenu")
+            title="Article test", slug="article-test", author=user, content="du contenu"
+        )
         assert str(post) == "Article test"
 
     def test_slug_auto_generated_if_missing(self, django_user_model):
@@ -52,10 +50,8 @@ class TestPostModel:
         tag2 = Tag.objects.create(name="framework")
 
         post = Post.objects.create(
-            title="Avec relations",
-            slug="avec-rel",
-            author=user,
-            content="texte")
+            title="Avec relations", slug="avec-rel", author=user, content="texte"
+        )
         post.category.add(cat)
         post.tags.add(tag1, tag2)
 
@@ -66,8 +62,12 @@ class TestPostModel:
     def test_post_ordering(self, django_user_model):
         """Test the ordering of posts by created_at."""
         user = django_user_model.objects.create_user(username="orderuser", password="pass")
-        p1 = Post.objects.create(title="Un", slug="un", author=user, content="...", created_at=timezone.now())  # noqa: F841
-        p2 = Post.objects.create(title="Deux", slug="deux", author=user, content="...", created_at=timezone.now())  # noqa: F841
+        p1 = Post.objects.create(
+            title="Un", slug="un", author=user, content="...", created_at=timezone.now()
+        )  # noqa: F841
+        p2 = Post.objects.create(
+            title="Deux", slug="deux", author=user, content="...", created_at=timezone.now()
+        )  # noqa: F841
 
         posts = Post.objects.all()
         assert list(posts) == list(posts.order_by("-created_at"))
