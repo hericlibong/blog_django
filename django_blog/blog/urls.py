@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     PostCreateView, PostCreateSuccessView,
     PostListView, PostUpdateView, PostDetailView,
-    PostDeleteView, 
+    PostDeleteView
 )
 app_name = 'blog'
 
@@ -13,6 +13,4 @@ urlpatterns = [
     path('update/<slug:slug>/', PostUpdateView.as_view(), name='post_update'),
     path('<slug:slug>/', PostDetailView.as_view(), name='post_detail'),
     path('delete/<slug:slug>/', PostDeleteView.as_view(), name='post_delete'),
-   # path('beautifull-f1/', BeautifulF1ListView.as_view(), name='beautifull_f1')
-
 ]

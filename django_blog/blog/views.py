@@ -152,8 +152,8 @@ class PostCreateSuccessView(TemplateView):
             context['post_published'] = False
             context['action'] = 'create'
         return context
- 
-    
+
+
 # class BeautifulF1ListView(ListView):
 #     model = Post
 #     template_name = 'blog/beautifull_f1.html'
