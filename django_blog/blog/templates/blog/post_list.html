@@ -30,6 +30,19 @@
                     </div>
                 </div>
 
+                  <!-- description des catégories -->
+                {% if selected_category %}
+                    <div class="mb-4">
+                        <h2 class="mb-2">{{ selected_category.name }}</h2>
+                        {% if selected_category.description %}
+                            <div class="category-description mb-3">
+                                {{ selected_category.description|linebreaks }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+
 
             {% for post in posts %}
             <div class="card mb-4">

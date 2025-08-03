@@ -479,5 +479,15 @@ p code, span code, li code {
     }
 }
 
+.category-description {
+    font-size: 1.08em;
+    color: #495464;
+    background: #f4f6fc;
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    border-left: 3.5px solid #3a86ff;
+    box-shadow: 0 2px 8px rgba(67,97,238,0.03);
+}
 
 

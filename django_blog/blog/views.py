@@ -110,6 +110,10 @@ class PostListView(ListView):
 
         # Afficher le profil de l'administrateur
         context['profile'] = UserProfile.objects.first()
+        category_slug = self.request.GET.get('category')
+        if category_slug:
+            category = Category.objects.filter(slug=category_slug).first()
+            context['selected_category'] = category
         return context
 
 
