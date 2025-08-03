@@ -1,6 +1,7 @@
 from django import forms
-from .models import Project
 from django_ckeditor_5.widgets import CKEditor5Widget
+
+from .models import Project
 
 
 class ProjectForm(forms.ModelForm):

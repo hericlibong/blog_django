@@ -1,3 +1,33 @@
+[tool.ruff]
+line-length = 100
+exclude = [
+    "**/migrations/*",
+    "venv",
+    "django_blog/django_blog/*",
+    "doc/",
+    "__pycache__",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]  # E: erreurs pycodestyle, F: erreurs pyflakes, I: import sorting
+ignore = ["E501"] # optionnel : ignorer "line too long" (tu peux l'enlever)
+
+[tool.black]
+line-length = 100
+target-version = ["py312"]
+exclude = '''
+/(
+    
+    venv|
+    migrations|
+    __pycache__|
+    django_blog/django_blog|
+    doc
+)/
+'''
+
+
+
 [build-system]
 requires = ["setuptools>=63.0", "wheel"]
 build-backend = "setuptools.build_meta"

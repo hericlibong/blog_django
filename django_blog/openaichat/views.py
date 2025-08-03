@@ -1,11 +1,11 @@
 import openai
-from accounts.models import UserProfile
-from portfolio.models import Project
-from blog.models import Post
-from django.shortcuts import render
-from django.http import JsonResponse
 from decouple import config
+from django.http import JsonResponse
+from django.shortcuts import render
 
+from accounts.models import UserProfile
+from blog.models import Post
+from portfolio.models import Project
 
 # Récupérer explicitement la clé API
 OPENAI_API_KEY = config('OPENAI_API_KEY', default=None)

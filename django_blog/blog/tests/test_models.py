@@ -1,8 +1,8 @@
 import pytest
-from blog.models import Category, Tag, Post
-from accounts.models import UserAccount
-from django.utils.text import slugify
 from django.utils import timezone
+from django.utils.text import slugify
+
+from blog.models import Category, Post, Tag
 
 
 @pytest.mark.django_db

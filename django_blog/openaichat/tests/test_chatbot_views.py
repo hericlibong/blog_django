@@ -1,11 +1,13 @@
+from unittest.mock import MagicMock, patch
+
+import openai
 import pytest
 from django.test import Client
+from django.urls import reverse
+
+from accounts.models import UserAccount, UserProfile
 from openaichat.views import get_portfolio_context, get_user_profile
 from portfolio.models import Project
-from accounts.models import UserAccount, UserProfile
-from django.urls import reverse
-from unittest.mock import patch, MagicMock
-import openai
 
 
 @pytest.fixture

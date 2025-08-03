@@ -1,9 +1,9 @@
-import pytest
 import shutil
+from unittest.mock import patch
+
+import pytest
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
-from pathlib import Path
-from unittest.mock import patch
 
 
 @pytest.fixture(scope='session', autouse=True)

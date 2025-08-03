@@ -1,8 +1,9 @@
 import pytest
-from django.urls import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
-from blog.models import Post, Category
+from django.urls import reverse
+
 from accounts.models import UserAccount
+from blog.models import Category, Post
 
 
 @pytest.mark.django_db

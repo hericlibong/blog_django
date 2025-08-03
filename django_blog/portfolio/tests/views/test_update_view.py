@@ -1,8 +1,9 @@
 import pytest
-from django.urls import reverse
-from portfolio.models import Project
 from django.contrib.auth import get_user_model
+from django.urls import reverse
+
 from portfolio.forms import ProjectForm
+from portfolio.models import Project
 
 User = get_user_model()
 

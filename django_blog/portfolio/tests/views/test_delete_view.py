@@ -1,9 +1,11 @@
-import pytest
-from portfolio.models import Project
-from django.urls import reverse
-from django.http import HttpRequest
-from django.contrib.auth import get_user_model
 from unittest.mock import patch
+
+import pytest
+from django.contrib.auth import get_user_model
+from django.http import HttpRequest
+from django.urls import reverse
+
+from portfolio.models import Project
 from portfolio.views import ProjectDeleteView
 
 User = get_user_model()

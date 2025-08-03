@@ -78,8 +78,16 @@ jobs:
         working-directory: django_blog
         run: pytest --cov=portfolio --cov=accounts --cov-report=term-missing
 
-      - name: Vérifier la conformité avec flake8
-        run: flake8
+
+
+      - name: Lint code with Ruff
+        working-directory: django_blog
+        run: ruff check .
+
+      - name: Format code with Black (fail if not formatted)
+        working-directory: django_blog
+        run: black --check .
+
 
   containerize:
     name: Créer et pousser l'image Docker

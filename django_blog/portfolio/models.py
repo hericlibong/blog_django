@@ -1,8 +1,7 @@
-from django.db import models
-from django.contrib.auth import get_user_model
 from cloudinary.models import CloudinaryField
+from django.contrib.auth import get_user_model
+from django.db import models
 from django_ckeditor_5.fields import CKEditor5Field
-
 
 User = get_user_model()
 

@@ -1,7 +1,8 @@
 import pytest
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from portfolio.models import Project, ImageFolio
+
+from portfolio.models import ImageFolio, Project
 
 User = get_user_model()
 

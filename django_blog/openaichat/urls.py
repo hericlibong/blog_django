@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import chatbot_view, chatbot_response
 
+from .views import chatbot_response, chatbot_view
 
 app_name = 'openaichat'
 

@@ -1,10 +1,18 @@
-from django.shortcuts import render
-from .models import Project
-from .forms import ProjectForm
-from accounts.models import UserProfile
-from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
+from django.urls import reverse_lazy
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    TemplateView,
+    UpdateView,
+)
+
+from accounts.models import UserProfile
+
+from .forms import ProjectForm
+from .models import Project
 
 User = get_user_model()
 

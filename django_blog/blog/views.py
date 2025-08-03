@@ -1,11 +1,19 @@
-from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView, ListView, UpdateView, DetailView, DeleteView
 from django.http import Http404
-from .models import Post, Category
+from django.urls import reverse_lazy
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    TemplateView,
+    UpdateView,
+)
+
 from accounts.models import UserProfile
+
 from .forms import PostForm
+from .models import Category, Post
 
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):

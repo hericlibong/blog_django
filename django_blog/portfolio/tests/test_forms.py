@@ -1,6 +1,7 @@
 import pytest
-from portfolio.forms import ProjectForm
 from django_ckeditor_5.widgets import CKEditor5Widget
+
+from portfolio.forms import ProjectForm
 
 
 @pytest.mark.django_db
