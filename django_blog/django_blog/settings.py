@@ -195,57 +195,64 @@ if os.getenv("RENDER"):
     SESSION_COOKIE_SECURE = True
 
 
-
 CKEDITOR_5_CONFIGS = {
     "default": {
         "toolbar": [
-            "heading", "|",
-            "bold", "italic", "underline", "strikethrough", "|",
-            "link", "blockQuote", "|",
-            "code", "codeBlock", "|",
-            "bulletedList", "numberedList", "|",
-            "insertTable", "|",
-            "imageUpload", "mediaEmbed", "sourceEditing", "|",
-            "undo", "redo",
+            "heading",
+            "|",
+            "bold",
+            "italic",
+            "underline",
+            "strikethrough",
+            "|",
+            "link",
+            "blockQuote",
+            "|",
+            "code",
+            "codeBlock",
+            "|",
+            "bulletedList",
+            "numberedList",
+            "|",
+            "insertTable",
+            "|",
+            "imageUpload",
+            "mediaEmbed",
+            "sourceEditing",
+            "|",
+            "undo",
+            "redo",
         ],
         "language": "fr",
-
         "image": {
-             "toolbar": ["imageTextAlternative", "imageStyle:full", "imageStyle:side"],
-       },
-
+            "toolbar": ["imageTextAlternative", "imageStyle:full", "imageStyle:side"],
+        },
         # Autorise IFRAME + SCRIPT pour Flourish ou tout autre embed
         "htmlSupport": {
             "allow": [
-                {   # <iframe …>
+                {  # <iframe …>
                     "name": "iframe",
                     "attributes": True,
                     "classes": True,
-                    "styles": True
+                    "styles": True,
                 },
-                {   # <script …>
+                {  # <script …>
                     "name": "script",
                     "attributes": True,
                     "classes": True,
-                    "styles": True
+                    "styles": True,
                 },
-                {   # <div class="flourish-embed …" data-src="…">
+                {  # <div class="flourish-embed …" data-src="…">
                     "name": "div",
                     "classes": "flourish-embed flourish-chart",
-                    "attributes": ["data-src"]
-                }
+                    "attributes": ["data-src"],
+                },
             ]
         },
-
         # Garde le code embed tel quel dans la BDD
-        "mediaEmbed": {
-            "previewsInData": True
-        }
+        "mediaEmbed": {"previewsInData": True},
     }
 }
-
-
-
 
 
 # CKEditor 5 – Stockage Cloudinary pour les uploads

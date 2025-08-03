@@ -21,8 +21,6 @@ exclude = '''
     venv|
     migrations|
     __pycache__|
-    django_blog/django_blog/settings.py|
-    django_blog/django_blog|
     doc
 )/
 '''
