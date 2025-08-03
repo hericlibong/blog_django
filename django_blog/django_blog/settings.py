@@ -195,44 +195,58 @@ if os.getenv("RENDER"):
     SESSION_COOKIE_SECURE = True
 
 
-# CKEditor 5 – Configuration enrichie
+
 CKEDITOR_5_CONFIGS = {
     "default": {
         "toolbar": [
-            "heading",
-            "|",
-            "bold",
-            "italic",
-            "underline",
-            "strikethrough",
-            "|",
-            "link",
-            "blockQuote",
-            "|",
-            "code",
-            "codeBlock",
-            "|",  # ✅ Blocs de code
-            "bulletedList",
-            "numberedList",
-            "|",
-            "insertTable",
-            "|",
-            "imageUpload",
-            "mediaEmbed",
-            "|",
-            "undo",
-            "redo",
+            "heading", "|",
+            "bold", "italic", "underline", "strikethrough", "|",
+            "link", "blockQuote", "|",
+            "code", "codeBlock", "|",
+            "bulletedList", "numberedList", "|",
+            "insertTable", "|",
+            "imageUpload", "mediaEmbed", "sourceEditing", "|",
+            "undo", "redo",
         ],
         "language": "fr",
+
         "image": {
-            "toolbar": ["imageTextAlternative", "imageStyle:full", "imageStyle:side"],
+             "toolbar": ["imageTextAlternative", "imageStyle:full", "imageStyle:side"],
+       },
+
+        # Autorise IFRAME + SCRIPT pour Flourish ou tout autre embed
+        "htmlSupport": {
+            "allow": [
+                {   # <iframe …>
+                    "name": "iframe",
+                    "attributes": True,
+                    "classes": True,
+                    "styles": True
+                },
+                {   # <script …>
+                    "name": "script",
+                    "attributes": True,
+                    "classes": True,
+                    "styles": True
+                },
+                {   # <div class="flourish-embed …" data-src="…">
+                    "name": "div",
+                    "classes": "flourish-embed flourish-chart",
+                    "attributes": ["data-src"]
+                }
+            ]
         },
-        "table": {
-            "contentToolbar": ["tableColumn", "tableRow", "mergeTableCells"],
-        },
-        # Ajoute d'autres options ici si besoin
+
+        # Garde le code embed tel quel dans la BDD
+        "mediaEmbed": {
+            "previewsInData": True
+        }
     }
 }
+
+
+
+
 
 # CKEditor 5 – Stockage Cloudinary pour les uploads
 CKEDITOR_5_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
