@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load static %}
+
 
 {% block title %}Assistant IA{% endblock %}
 
@@ -6,8 +8,8 @@
 <div class="container chat-container mt-5">
     <h2 class="text-center">Assistant IA</h2>
     <p class="text-center description">
-        Discutez avec l'Assistant IA pour en savoir plus sur moi. Mon parcours, mes expériences, ma reconversion.
-        Il sait tout de moi... Ou presque 😉.
+        Interrogez moi sur mon parcours, mes expériences, ma reconversion, mes projets.
+        qje vous réponds 😉.
     </p>
 
     <div class="chat-box" id="chat-box"></div>
@@ -37,7 +39,7 @@ function sendMessage() {
     .then(data => {
         if (data.response) {
             const html = marked.parse(data.response);
-            chatBox.innerHTML += `<div class="bot-message"><strong><span style="font-size:1.3em; margin-right:6px;">🤖</span></strong>${html}</div>`;
+            chatBox.innerHTML += `<div class="bot-message"><strong><img src="{% static 'favicon.ico' %}" style="width:25px; height:25px; border-radius:50%; margin-right:6px;" alt="Héric"></strong>${html}</div>`;
 
 
         } else {

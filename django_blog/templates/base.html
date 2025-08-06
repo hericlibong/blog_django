@@ -36,7 +36,10 @@
         <div class="d-flex flex-wrap">
             <a class="p-2 link-secondary" href="{% url 'portfolio:project_list' %}">Projets</a>
             <a class="p-2 link-secondary" href="{% url 'blog:post_list' %}">Blog</a>
-            <a class="p-2 link-secondary" href="{% url 'openaichat:chatbot' %}">🤖 IA Assistant</a>
+            <a class="p-2 link-secondary" href="{% url 'openaichat:chatbot' %}">
+                <img src="{% static 'favicon.ico' %}" alt="IA" style="height:25px; vertical-align: middle; margin-right: 5px; border-radius: 50%;">
+                IA Assistant
+            </a>
             {% if user.is_authenticated and user.is_superuser %}
             <div class="ms-auto d-flex gap-2">
                 <a class="btn btn-outline-dark" href="{% url 'portfolio:project_create' %}">Créer un projet</a>
