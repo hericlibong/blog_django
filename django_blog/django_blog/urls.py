@@ -16,6 +16,7 @@ Including another URLconf
 """
 
 from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
@@ -30,6 +31,7 @@ urlpatterns = [
     path("openaichat/", include("openaichat.urls", namespace="openaichat")),
     path("accounts/", include("accounts.urls", namespace="accounts")),
     path("ckeditor5/", include("django_ckeditor_5.urls")),
+    path('i18n/', include('django.conf.urls.i18n')),  # ✅ pour activer /i18n/setlang/
 ]
 
 # Ajouter la gestion des médias en mode développement

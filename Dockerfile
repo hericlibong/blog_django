@@ -2,7 +2,7 @@
 FROM python:3.12-slim
 
 # Installer le client PostgreSQL
-RUN apt-get update && apt-get install -y postgresql-client && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y postgresql-client gettext && rm -rf /var/lib/apt/lists/*
 
 # 1) On place notre répertoire de travail “temporaire” à /app
 WORKDIR /app

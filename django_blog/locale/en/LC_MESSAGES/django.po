@@ -1,0 +1,46 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-09 07:36+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: django_blog/settings.py:155
+msgid "Français"
+msgstr ""
+
+#: django_blog/settings.py:156
+msgid "English"
+msgstr ""
+
+#: templates/base.html:40
+msgid "Projets"
+msgstr "Projects"
+
+#: templates/base.html:41
+msgid "Blog"
+msgstr "Blog"
+
+#: templates/base.html:44
+msgid "IA Assistant"
+msgstr "AI Assistant"
+
+#: templates/base.html:48
+msgid "Créer un projet"
+msgstr "Create a project"
+
+#: templates/base.html:49
+msgid "Créer un article"
+msgstr "Create an article"
