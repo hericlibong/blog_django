@@ -1,27 +1,28 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Articles{% endblock %}
+{% block title %}{% trans "Articles" %}{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
     <div class="row">
         <!-- Section des articles -->
         <div class="col-md-8">
-            <h1 class="pb-4 mb-4 border-bottom">Articles</h1>
+            <h1 class="pb-4 mb-4 border-bottom">{% trans "Articles" %}</h1>
 
             <!-- 🔽 Boutons de filtre -->
             <div class="mb-3 text-end">
                 {% if user.is_authenticated %}
-                    <a href="{% url 'blog:post_list' %}?filter=published" class="btn btn-outline-success btn-sm">Articles publiés</a>
-                    <a href="{% url 'blog:post_list' %}?filter=draft" class="btn btn-outline-warning btn-sm">Brouillons</a>
-                    <a href="{% url 'blog:post_list' %}" class="btn btn-outline-secondary btn-sm">Tous mes articles</a>
+                    <a href="{% url 'blog:post_list' %}?filter=published" class="btn btn-outline-success btn-sm">{% trans "Articles publiés" %}</a>
+                    <a href="{% url 'blog:post_list' %}?filter=draft" class="btn btn-outline-warning btn-sm">{% trans "Brouillons" %}</a>
+                    <a href="{% url 'blog:post_list' %}" class="btn btn-outline-secondary btn-sm">{% trans "Tous mes articles" %}</a>
                 {% endif %}
             </div>
             <!-- 🔥 Liste des catégories -->
                 <div class="mb-4">
-                    <h5>Catégories :</h5>
+                    <h5>{% trans "Catégories :" %}</h5>
                     <div class="d-flex flex-wrap gap-2">
-                        <a href="{% url 'blog:post_list' %}" class="btn btn-outline-secondary btn-sm">Toutes</a>
+                        <a href="{% url 'blog:post_list' %}" class="btn btn-outline-secondary btn-sm">{% trans "Toutes" %}</a>
                         {% for category in categories %}
                             <a href="{% url 'blog:post_list' %}?category={{ category.slug }}" class="btn btn-outline-primary btn-sm">
                                 {{ category.name }}
@@ -52,21 +53,21 @@
                             <h3 class="card-title">
                                 <a href="{% url 'blog:post_detail' slug=post.slug %}" class="text-dark text-decoration-none">{{ post.title }}</a>
                                 {% if not post.is_published %}
-                                    <span class="badge bg-warning text-dark ms-2">Brouillon</span>
+                                    <span class="badge bg-warning text-dark ms-2">{% trans "Brouillon" %}</span>
                                 {% endif %}
                             </h3>
                             {% if post.subtitle %}
                                 <p class="card-text">{{ post.subtitle|truncatewords:25 }}</p>
                             {% endif %}
                             <p class="card-text">
-                                <small class="text-muted">Par : {{ post.author.username }}</small><br>
-                                <small class="text-muted">Créé le : {{ post.created_at|date:"d/m/Y" }}</small>
+                                <small class="text-muted">{% trans "Par :" %} {{ post.author.username }}</small><br>
+                                <small class="text-muted">{% trans "Créé le :" %} {{ post.created_at|date:"d/m/Y" }}</small>
                             </p>
 
                             {% if user == post.author or user.is_superuser %}
                             <div class="d-flex justify-content-end">
-                                <a href="{% url 'blog:post_update' slug=post.slug %}" class="btn btn-outline-secondary btn-sm me-2">Modifier</a>
-                                <a href="{% url 'blog:post_delete' slug=post.slug %}" class="btn btn-outline-danger btn-sm">Supprimer</a>
+                                <a href="{% url 'blog:post_update' slug=post.slug %}" class="btn btn-outline-secondary btn-sm me-2">{% trans "Modifier" %}</a>
+                                <a href="{% url 'blog:post_delete' slug=post.slug %}" class="btn btn-outline-danger btn-sm">{% trans "Supprimer" %}</a>
                             </div>
                             {% endif %}
                         </div>
@@ -80,7 +81,7 @@
                 </div>
             </div>
             {% empty %}
-                <p class="text-muted text-center">Aucun article disponible.</p>
+                <p class="text-muted text-center">{% trans "Aucun article disponible." %}</p>
             {% endfor %}
         </div>
 

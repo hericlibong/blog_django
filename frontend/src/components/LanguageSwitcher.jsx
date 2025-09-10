@@ -10,14 +10,12 @@ export default function LanguageSwitcher() {
   const [lang, setLang] = useState(() => getCookie("django_language") || "fr");
 
   useEffect(() => {
-    // Mets à jour l'attribut lang de la page
     document.documentElement.setAttribute("lang", lang);
   }, [lang]);
 
   const handleChange = async (newLang) => {
     setLang(newLang);
 
-    // Envoie la nouvelle langue à Django via /i18n/setlang/
     await fetch("/i18n/setlang/", {
       method: "POST",
       headers: {
@@ -27,7 +25,6 @@ export default function LanguageSwitcher() {
       body: `language=${newLang}`,
     });
 
-    // Recharge la page pour appliquer les traductions serveur
     window.location.reload();
   };
 
@@ -44,21 +41,28 @@ export default function LanguageSwitcher() {
         padding: "6px 10px",
         boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
         display: "flex",
-        gap: 8,
+        gap: 12,
         alignItems: "center",
-        fontSize: 14,
+        fontSize: 18,
+        cursor: "pointer",
       }}
     >
-      <span style={{ opacity: 0.7 }}>Langue</span>
-      <select
-        value={lang}
-        onChange={(e) => handleChange(e.target.value)}
-        style={{ border: "1px solid #ccc", borderRadius: 6, padding: "4px 6px" }}
-        aria-label="Sélecteur de langue"
+      <span
+        onClick={() => handleChange("fr")}
+        style={{ filter: lang === "fr" ? "none" : "grayscale(80%)" }}
+        role="button"
+        aria-label="Français"
       >
-        <option value="fr">FR</option>
-        <option value="en">EN</option>
-      </select>
+        🇫🇷
+      </span>
+      <span
+        onClick={() => handleChange("en")}
+        style={{ filter: lang === "en" ? "none" : "grayscale(80%)" }}
+        role="button"
+        aria-label="English"
+      >
+        🇬🇧
+      </span>
     </div>
   );
 }

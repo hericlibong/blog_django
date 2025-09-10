@@ -1,0 +1,325 @@
+/* =============================
+   THEME CLAIR (par défaut)
+   ============================= */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #222222;
+  --link-color: #0d6efd;
+  --card-bg: #f8f9fa;
+  --border-color: #dee2e6;
+  --muted-text: #6c757d;
+}
+
+/* =============================
+   THEME SOMBRE
+   ============================= */
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #f5f5f5;
+  --link-color: #66b2ff;
+  --card-bg: #1e1e1e;
+  --border-color: #333333;
+  --muted-text: #aaaaaa;
+}
+
+/* =============================
+   APPLICATION GLOBALE
+   ============================= */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+a {
+  color: var(--link-color);
+}
+
+/* =============================
+   NAVBAR
+   ============================= */
+.navbar {
+  background-color: var(--card-bg) !important;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.navbar .nav-link,
+.navbar-brand {
+  color: var(--text-color) !important;
+}
+
+.navbar .nav-link:hover {
+  color: var(--link-color) !important;
+}
+
+/* =============================
+   CARTES & PANELS
+   ============================= */
+.card {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border: 1px solid var(--border-color);
+}
+
+.card .card-header {
+  background-color: var(--card-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* =============================
+   BOUTONS
+   ============================= */
+.btn {
+  color: var(--text-color);
+}
+
+.btn-primary {
+  background-color: #0d6efd !important;
+  border-color: #0d6efd !important;
+}
+
+.btn-outline-secondary {
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--border-color);
+  color: var(--bg-color);
+}
+
+/* =============================
+   FORMULAIRES
+   ============================= */
+.form-control {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.form-control:focus {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-color: var(--link-color);
+  box-shadow: none;
+}
+
+/* =============================
+   TABLES
+   ============================= */
+.table {
+  color: var(--text-color);
+  background-color: var(--card-bg);
+}
+
+.table th,
+.table td {
+  border-color: var(--border-color);
+}
+
+/* =============================
+   ALERTES
+   ============================= */
+.alert {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+/* =============================
+   TEXTE "MUTED"
+   ============================= */
+.text-muted {
+  color: var(--muted-text) !important;
+}
+
+
+/* Ajustements utilitaires sous dark */
+[data-theme="dark"] .bg-white,
+[data-theme="dark"] .bg-light { background-color: var(--card-bg) !important; }
+
+[data-theme="dark"] .text-dark,
+[data-theme="dark"] .text-body { color: var(--text-color) !important; }
+
+[data-theme="dark"] .border,
+[data-theme="dark"] .border-top,
+[data-theme="dark"] .border-bottom,
+[data-theme="dark"] .border-start,
+[data-theme="dark"] .border-end { border-color: var(--border-color) !important; }
+
+[data-theme="dark"] .badge { color: #fff; }
+[data-theme="dark"] .badge.bg-warning { color: #111; } /* lisibilité sur jaune */
+
+
+
+/* --- NAVBAR + HEADER en dark --- */
+[data-theme="dark"] header,
+[data-theme="dark"] .site-header {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .navbar {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+[data-theme="dark"] .navbar-brand,
+[data-theme="dark"] .navbar .nav-link {
+  color: var(--text-color) !important;
+}
+[data-theme="dark"] .navbar .nav-link:hover,
+[data-theme="dark"] .navbar .nav-link:focus {
+  color: var(--link-color) !important;
+}
+
+/* Menus déroulants éventuels */
+[data-theme="dark"] .dropdown-menu {
+  background-color: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+}
+[data-theme="dark"] .dropdown-item { color: var(--text-color) !important; }
+[data-theme="dark"] .dropdown-item:hover { background-color: var(--border-color) !important; }
+
+/* Boutons outline clairs du header (ex: CRÉER UN PROJET) */
+[data-theme="dark"] .btn-outline-light {
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+}
+[data-theme="dark"] .btn-outline-light:hover {
+  background-color: var(--border-color) !important;
+  color: var(--bg-color) !important;
+}
+
+/* Filets clairs résiduels */
+[data-theme="dark"] .border-bottom { border-bottom-color: var(--border-color) !important; }
+
+/* Sécurités déjà utiles pour le header */
+[data-theme="dark"] .bg-white,
+[data-theme="dark"] .bg-light { background-color: var(--card-bg) !important; }
+[data-theme="dark"] .text-dark,
+[data-theme="dark"] .text-body { color: var(--text-color) !important; }
+
+
+/* Bootstrap variables en dark (couvre bg-body-tertiary, navbars, etc.) */
+[data-theme="dark"] {
+  --bs-body-bg: var(--bg-color);
+  --bs-body-color: var(--text-color);
+  --bs-border-color: var(--border-color);
+  --bs-link-color: var(--link-color);
+
+  --bs-card-bg: var(--card-bg);
+  --bs-card-color: var(--text-color);
+
+  --bs-secondary-bg: #181818;
+  --bs-tertiary-bg: #1f1f1f;
+
+  /* Nav / Navbar */
+  --bs-navbar-color: var(--text-color);
+  --bs-navbar-hover-color: var(--link-color);
+  --bs-navbar-brand-color: var(--text-color);
+  --bs-navbar-brand-hover-color: var(--link-color);
+  --bs-nav-link-color: var(--text-color);
+  --bs-nav-link-hover-color: var(--link-color);
+}
+
+/* Forcer le bandeau clair résiduel (bg-body-tertiary / bg-light) */
+[data-theme="dark"] .bg-body,
+[data-theme="dark"] .bg-body-tertiary,
+[data-theme="dark"] .bg-light,
+[data-theme="dark"] .bg-white {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Liens du menu */
+[data-theme="dark"] .nav,
+[data-theme="dark"] .nav-link {
+  color: var(--text-color) !important;
+}
+[data-theme="dark"] .nav-link:hover,
+[data-theme="dark"] .nav-link:focus {
+  color: var(--link-color) !important;
+}
+
+/* Si ton menu utilise .nav-underline ou .nav-tabs */
+[data-theme="dark"] .nav-underline .nav-link,
+[data-theme="dark"] .nav-tabs .nav-link {
+  color: var(--text-color) !important;
+}
+[data-theme="dark"] .nav-underline .nav-link.active,
+[data-theme="dark"] .nav-tabs .nav-link.active {
+  color: var(--link-color) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Boutons du header (Créer un projet / un article) */
+[data-theme="dark"] .btn-outline-light,
+[data-theme="dark"] .btn-outline-secondary {
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+}
+[data-theme="dark"] .btn-outline-light:hover,
+[data-theme="dark"] .btn-outline-secondary:hover {
+  background-color: var(--border-color) !important;
+  color: var(--bg-color) !important;
+}
+
+
+/* Les drapeaux utilisent souvent .btn-light → forcer la variante dark */
+[data-theme="dark"] .btn-light {
+  background-color: #2a2a2a !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+}
+
+
+/* 1) Liens utilitaires Bootstrap souvent utilisés dans les menus */
+[data-theme="dark"] .link-dark { 
+  color: var(--text-color) !important; 
+}
+
+/* 2) Menus construits avec .navbar-light (couleurs forcées en clair) */
+[data-theme="dark"] .navbar-light .navbar-nav .nav-link,
+[data-theme="dark"] .navbar-light .navbar-brand {
+  color: var(--text-color) !important;
+}
+[data-theme="dark"] .navbar-light .navbar-nav .nav-link:hover,
+[data-theme="dark"] .navbar-light .navbar-brand:hover {
+  color: var(--link-color) !important;
+}
+
+/* 3) Bandeau/menu posé en .bg-body-tertiary (ou variantes) */
+[data-theme="dark"] .bg-body-tertiary,
+[data-theme="dark"] .bg-light,
+[data-theme="dark"] .bg-white {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* 4) Boutons clairs des drapeaux (LanguageSwitcher) */
+[data-theme="dark"] #react-root .btn-light {
+  background-color: #2a2a2a !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+}
+
+
+/* --- Forcer le skin du bandeau menu --- */
+[data-theme="dark"] .site-toolbar {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+}
+[data-theme="dark"] .site-toolbar .nav-link,
+[data-theme="dark"] .site-toolbar a {
+  color: var(--text-color) !important;
+}
+[data-theme="dark"] .site-toolbar .nav-link:hover,
+[data-theme="dark"] .site-toolbar a:hover {
+  color: var(--link-color) !important;
+}
+

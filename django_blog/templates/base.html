@@ -1,52 +1,62 @@
 {% load static %}
 {% load i18n %}
-
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     {% block extrahead %}{% endblock %}
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Mon Portfolio{% endblock %}</title>
     <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
 
-
-    
+    <!-- pas de CSS React global -->
     <!-- <link rel="stylesheet" href="{% static 'react/assets/index.css' %}"> -->
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap & styles du site -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Inclure Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-    
 
+    <!-- Script anti-flash : applique le thème avant le rendu -->
+    <script>
+      (function() {
+        function getCookie(name) {
+          let v = `; ${document.cookie}`;
+          let p = v.split(`; ${name}=`);
+          if (p.length === 2) return p.pop().split(';').shift();
+        }
+        const theme = getCookie("theme") || "light";
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
 
+    <!-- ⚠️ Charger theme.css EN DERNIER pour surcharger Bootstrap -->
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
 </head>
+
 <body>
     <div id="react-root"></div>
 
-
     <!-- ✅ Header avec le titre -->
     <header class="container py-4 text-center border-bottom">
-        <h1 class="fw-bold text-start"><a href="{% url 'portfolio:project_list' %}" class="text-decoration-none text-dark">HericLdev</a></h1>
+        <h1 class="fw-bold text-start">
+            <a href="{% url 'portfolio:project_list' %}" class="text-decoration-none">HericLdev</a>
+        </h1>
     </header>
 
-    <!-- ✅ Navbar bien alignée avec le contenu -->
-    <nav class="container nav-scroller py-1 mb-3 border-bottom">
-        <div class="d-flex flex-wrap">
-            <a class="p-2 link-secondary" href="{% url 'portfolio:project_list' %}">{% trans "Projets" %}</a>
-            <a class="p-2 link-secondary" href="{% url 'blog:post_list' %}">{% trans "Blog" %}</a>
-            <a class="p-2 link-secondary" href="{% url 'openaichat:chatbot' %}">
-                <img src="{% static 'favicon.ico' %}" alt="IA" style="height:25px; vertical-align: middle; margin-right: 5px; border-radius: 50%;">
+    <!-- ✅ Navbar avec classe repère site-toolbar -->
+    <nav class="container nav-scroller py-1 mb-3 border-bottom site-toolbar">
+        <div class="d-flex flex-wrap align-items-center">
+            <a class="p-2 nav-link" href="{% url 'portfolio:project_list' %}">{% trans "Projets" %}</a>
+            <a class="p-2 nav-link" href="{% url 'blog:post_list' %}">{% trans "Blog" %}</a>
+            <a class="p-2 nav-link d-flex align-items-center" href="{% url 'openaichat:chatbot' %}">
+                <img src="{% static 'favicon.ico' %}" alt="IA" style="height:25px; margin-right: 5px; border-radius: 50%;">
                 {% trans "IA Assistant" %}
             </a>
             {% if user.is_authenticated and user.is_superuser %}
             <div class="ms-auto d-flex gap-2">
-                <a class="btn btn-outline-dark" href="{% url 'portfolio:project_create' %}">{% trans "Créer un projet" %}</a>
-                <a class="btn btn-outline-dark" href="{% url 'blog:post_create' %}">{% trans "Créer un article" %}</a>
+                <a class="btn btn-outline-secondary" href="{% url 'portfolio:project_create' %}">{% trans "Créer un projet" %}</a>
+                <a class="btn btn-outline-secondary" href="{% url 'blog:post_create' %}">{% trans "Créer un article" %}</a>
             </div>
             {% endif %}
         </div>
@@ -61,11 +71,12 @@
     <!-- ✅ Pied de page -->
     <footer class="text-center py-4 bg-light border-top">
         <p>&copy; 2025 Heric Libong -- HericLdev </p>
-        <p>Site réalisé avec <strong>Django Framework</strong> <img src="{% static 'django-logo.png' %}" alt="Django Logo" style="height:30px; vertical-align: middle;"></p>
+        <p>
+            Site réalisé avec <strong>Django Framework</strong>
+            <img src="{% static 'django-logo.png' %}" alt="Django Logo" style="height:30px; vertical-align: middle;">
+        </p>
     </footer>
-   
-    
-   
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
@@ -73,7 +84,6 @@
             document.querySelectorAll("oembed[url]").forEach(function(element) {
                 var url = element.getAttribute("url");
                 if (url) {
-                    // Cas Youtube
                     var iframe = document.createElement("iframe");
                     iframe.setAttribute("width", "600");
                     iframe.setAttribute("height", "400");
@@ -84,70 +94,52 @@
                         var videoId = url.split("v=")[1] || url.split("/").pop();
                         iframe.src = "https://www.youtube.com/embed/" + videoId.replace(/[^a-zA-Z0-9_-]/g, "");
                     } else {
-                        iframe.src = url; // Pour d'autres providers
+                        iframe.src = url;
                     }
                     element.parentNode.replaceChild(iframe, element);
                 }
             });
         });
-        </script>
-    
-            <!-- PrismJS CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" />
+    </script>
 
-        <!-- PrismJS Core JS -->
-        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
-        <!-- Si tu veux gérer le Python, ajoute le langage Python -->
-        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
-        <!-- Ajoute d’autres langages si tu veux (ex : javascript, bash, etc) -->
-        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-docker.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-<LANG>.min.js"></script>
+    <!-- PrismJS CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" />
+    <!-- PrismJS Core JS -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-docker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-<LANG>.min.js"></script>
 
-            <script>
-                // Fonction pour récupérer le token CSRF dans les cookies
-                function getCookie(name) {
-                    let cookieValue = null;
-                    if (document.cookie && document.cookie !== '') {
-                        const cookies = document.cookie.split(';');
-                        for (let i = 0; i < cookies.length; i++) {
-                            const cookie = cookies[i].trim();
-                            // Est-ce que ça commence par le bon nom ?
-                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                                break;
-                            }
-                        }
+    <script>
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
                     }
-                    return cookieValue;
                 }
-            
-                // Pour tous les uploads d’images CKEditor5, ajoute automatiquement le token CSRF
-                document.addEventListener('DOMContentLoaded', function () {
-                    // Repère les requêtes de CKEditor5 qui n'ont pas le token CSRF
-                    if (window.CKEDITOR && window.CKEDITOR._.editorConfig) {
-                        // Patch global (si tu utilises une intégration JS custom)
-                    }
-            
-                    // Pour tous les fetch/ajax (si CKEditor5 envoie par fetch)
-                    const originalFetch = window.fetch;
-                    window.fetch = function(input, init) {
-                        if (typeof input === 'string' && input.includes('image_upload')) {
-                            init = init || {};
-                            init.headers = init.headers || {};
-                            init.headers['X-CSRFToken'] = getCookie('csrftoken');
-                        }
-                        return originalFetch(input, init);
-                    };
-                });
-            </script>
-            
+            }
+            return cookieValue;
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            const originalFetch = window.fetch;
+            window.fetch = function(input, init) {
+                if (typeof input === 'string' && input.includes('image_upload')) {
+                    init = init || {};
+                    init.headers = init.headers || {};
+                    init.headers['X-CSRFToken'] = getCookie('csrftoken');
+                }
+                return originalFetch(input, init);
+            };
+        });
+    </script>
 
-
-        <script src="https://public.flourish.studio/resources/embed.js"></script> 
-        <script type="module" src="{% static 'react/assets/index.js' %}"></script>
-
-   
+    <script src="https://public.flourish.studio/resources/embed.js"></script> 
+    <script type="module" src="{% static 'react/assets/index.js' %}"></script>
 </body>
-
 </html>
