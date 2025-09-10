@@ -1,5 +1,6 @@
 import LanguageSwitcher from "./components/LanguageSwitcher.jsx";
 import ThemeSwitcher from "./components/ThemeSwitcher.jsx";
+import NavbarToggle from "./components/NavbarToggle.jsx";
 import { useState, useEffect } from "react";
 
 function getCookie(name) {
@@ -18,6 +19,7 @@ export default function App() {
 
   return (
     <>
+      <NavbarToggle />
       {/* Conteneur vertical, deux blocs séparés → plus de chevauchement */}
       <div style={{ position: "fixed", top: 112, right: 20, display: "flex", flexDirection: "column", gap: "10px", alignItems: "flex-end", zIndex: 1200 }}>
         <div style={{ background: "var(--card-bg)", padding: "8px 12px", borderRadius: 8, boxShadow: "0 2px 6px rgba(0,0,0,0.15)" }}>

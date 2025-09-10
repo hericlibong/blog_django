@@ -323,3 +323,44 @@ a {
   color: var(--link-color) !important;
 }
 
+@media (max-width: 767.98px) {
+  .site-toolbar { position: relative; }
+  .site-toolbar .nav-collapse {
+    position: absolute; top: 100%; right: 0; display: none;
+    flex-direction: column; gap: .5rem; padding: .75rem;
+    background: var(--card-bg); border: 1px solid var(--border-color);
+    border-radius: .75rem; box-shadow: 0 8px 24px rgba(0,0,0,.2);
+  }
+  .site-toolbar.is-open .nav-collapse { display: flex; }
+}
+
+/* === Navbar mobile: afficher le panneau AU-DESSUS du contenu === */
+@media (max-width: 767.98px) {
+  #site-toolbar.site-toolbar {
+    position: sticky;      /* reste collé en haut en scroll */
+    top: 0;
+    z-index: 4000;         /* au-dessus du contenu et des cartes */
+    background: var(--bg-color);
+    overflow: visible;     /* pour que le panneau déborde */
+  }
+  .site-toolbar .nav-collapse {
+    position: absolute;
+    top: calc(100% + 8px); /* juste sous la barre */
+    left: 0;
+    right: 0;              /* plein container */
+    display: none;         /* caché par défaut */
+    flex-direction: column;
+    gap: .5rem;
+    padding: .75rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: .75rem;
+    box-shadow: 0 12px 32px rgba(0,0,0,.35);
+    z-index: 4500;         /* AU-DESSUS de tout (switchers inclus) */
+  }
+  .site-toolbar.is-open .nav-collapse { display: flex; }
+
+  /* confort tactile */
+  .site-toolbar .nav-link { padding: .5rem .25rem; }
+}
+
